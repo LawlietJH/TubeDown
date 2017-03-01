@@ -51,6 +51,8 @@ def Ruta():
 
 xD = True
 
+Ruta = Ruta()					#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
+
 while xD:
 	
 	NomVid = input("\n\n\n\t URL: ")				#~ Escribimos la URL del Video a Descargar.
@@ -62,8 +64,7 @@ while xD:
 	
 	print("\n\n\n Video: ", VideoHD.filename)		#~ Se imprime el nombre del video.
 	
-	Ruta = Ruta()					#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
-	
 	VideoHD.download(r""+Ruta)				#~ Descargamos el video seleccionado.
 	
+	print("\n\n Descargado!\n")
 	
