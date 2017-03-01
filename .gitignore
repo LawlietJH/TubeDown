@@ -1,3 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+*.pyc
+*.pyo
+
+# Otros documentos propios
+*.zion
+*.txt
+
+# -------------------------------------
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
