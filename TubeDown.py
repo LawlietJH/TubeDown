@@ -22,31 +22,28 @@ def Chk_Dep():
 		
 	except ModuleNotFoundError:
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
-		os.system("pip install pytube")# > Nul && cls")
-		global PT
-		PT = False
-		return PT
+		os.system("pip install pytube > Nul && cls")
 		
 	except Exception as ex:
 		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
 
 #~ os.system("pip uninstall pytube -y")# > Nul")
 
-PT = True
+
 Chk_Dep()
-if PT: from pytube import *
+from pytube import *
 
 
 def Ruta():
 	
-	Ruta = os.getcwd()
+	Ruta = os.getcwd()							#~ Se Obtiene La Ruta Actual Del Script
 	
-	if not os.path.exists(Ruta+"\Descargas"):
-		os.mkdir(Ruta+"\Descargas")	
+	if not os.path.exists(Ruta+"\Descargas"):	#~ Comprobamos si existe la Carpeta de Descargas.
+		os.mkdir(Ruta+"\Descargas")				#~ Creamos La Carpeta de descargas si No existe.
 	
-	os.chdir("Descargas")
+	os.chdir("Descargas")						#~ Nos Situamos En La Carpeta De Descargas 
 	
-	Ruta = os.getcwd()	
+	Ruta = os.getcwd()							#~ Guardamos La Ruta.
 	
 	return Ruta
 
@@ -56,15 +53,17 @@ xD = True
 
 while xD:
 	
-	NomVid = input("URL: ")				#~ Escribimos la URL del Video a Descargar.
+	NomVid = input("\n\n\n\t URL: ")				#~ Escribimos la URL del Video a Descargar.
 
 	Video = YouTube(NomVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
 
-	#~ VideoHD = Video.get('mp4', '720p')		#Obtenemos el video mp4 de 720p.
-	VideoHD = Video.filter('mp4')[-1]			#Obtenemos el video mp4 de mejor calidad posible.
+	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
+	VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
 	
-	print("\n\n\n Video: ", VideoHD.filename)		#Se imprime el nombre del video.
+	print("\n\n\n Video: ", VideoHD.filename)		#~ Se imprime el nombre del video.
 	
-	#~ VideoHD.download(r""+Ruta)				#Descargamos el video seleccionado.
+	Ruta = Ruta()					#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
+	
+	VideoHD.download(r""+Ruta)				#~ Descargamos el video seleccionado.
 	
 	
