@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+__Descargas__/
 *.py[cod]
 
 *.pyc
