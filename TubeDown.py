@@ -17,7 +17,24 @@ def Chk_Dep():
 		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
 
 
+
 PT = True
 Chk_Dep()
 if PT: from pytube import *
 
+
+
+
+xD = True
+
+while xD:
+	
+	NomVid = input("URL: ")
+
+	Video = YouTube(NomVid)
+
+	VideoHD = Video.get('mp4', '720p')
+
+	VideoHD.download(r""+Ruta)
+	
+	
