@@ -34,7 +34,7 @@ Chk_Dep()
 from pytube import *
 #~ from pprint import pprint
 
-print(dir(YouTube.filter))
+#~ print(dir(YouTube.filter))
 
 def Ruta():
 	
@@ -55,24 +55,30 @@ xD = True
 
 Ruta = Ruta()			#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
 
-Cont = 0
-
 while xD:
 	
+	Cont = 0
 	URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
 	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
 	VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
-	Nombre = VideoHD.filename
-
+	Nomb = Nombre = VideoHD.filename
+	
 	while xD:
+		
 		try:
-			print("\n\n\n Video: ", VideoHD.filename)	#~ Se imprime el nombre del video.
-			VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
-			break
+			if not os.path.exists(Nombre):
+				print("\n\n\n Video: ", VideoHD.filename)	#~ Se imprime el nombre del video.
+				VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
+				break
+			
 		except OSError:
 			Cont += 1
 			Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
 		
+		except Exception as ex:
+			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
+
+			
 	print("\n\n Descargado!\n")
 	
