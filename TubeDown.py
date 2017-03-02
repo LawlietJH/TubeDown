@@ -86,15 +86,15 @@ while xD:
 		print("\n\n Descargado!\n")
 		
 	except ValueError:
-		print("\n\n\n\t\t No es una URL...\n\n")
+		print("\n\n\n\t\t No es una URL...")
 		
 	except IndexError:
-		print("\n\n\n\t\t Escribe una URL...\n\n")	
+		print("\n\n\n\t\t Escribe una URL...")	
 		
 	except Exception as ex:
 		
-		if type(ex).__name__ == "URLError":
-			print("\n\n\n\t\t URL no válido...\n\n")
+		if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
+			print("\n\n\n\t\t URL no válido...")
 		else:
 			print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 	
