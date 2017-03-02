@@ -68,12 +68,13 @@ while xD:
 		while xD:
 			
 			try:
-				if not os.path.exists(Nombre):
-					print("\n\n\n Video: ", VideoHD.filename)	#~ Se imprime el nombre del video.
-					VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
-					break
+				#~ if not os.path.exists(Video.filename):
 					
-				VideoHD.download(r""+Ruta)					#~ Si ya existe el video se provoca el error para que aumente el contador.
+				print("\n\n\n Video: ", Video.filename)	#~ Se imprime el nombre del video.
+				VideoHD.download(r""+Ruta)				#~ Descargamos el video seleccionado.
+				break
+					
+				#~ VideoHD.download(r""+Ruta)					#~ Si ya existe el video se provoca el error para que aumente el contador.
 				
 			except OSError:
 				Cont += 1
