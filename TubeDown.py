@@ -58,27 +58,43 @@ Ruta = Ruta()			#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
 while xD:
 	
 	Cont = 0
-	URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.
-	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
-	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
-	VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
-	Nomb = Nombre = VideoHD.filename
+	try:
+		URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.
+		Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
+		#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
+		VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
+		Nomb = Nombre = VideoHD.filename
+		
+		while xD:
+			
+			try:
+				if not os.path.exists(Nombre):
+					print("\n\n\n Video: ", VideoHD.filename)	#~ Se imprime el nombre del video.
+					VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
+					break
+					
+				VideoHD.download(r""+Ruta)					#~ Si ya existe el video se provoca el error para que aumente el contador.
+				
+			except OSError:
+				Cont += 1
+				Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
+			
+			except Exception as ex:
+				print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 	
-	while xD:
+		print("\n\n Descargado!\n")
 		
-		try:
-			if not os.path.exists(Nombre):
-				print("\n\n\n Video: ", VideoHD.filename)	#~ Se imprime el nombre del video.
-				VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
-				break
-			
-		except OSError:
-			Cont += 1
-			Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
+	except ValueError:
+		print("\n\n\n\t\t No es una URL...\n\n")
 		
-		except Exception as ex:
-			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
-
-			
-	print("\n\n Descargado!\n")
+	except IndexError:
+		print("\n\n\n\t\t Escribe una URL...\n\n")	
+		
+	except Exception as ex:
+		
+		if type(ex).__name__ == "URLError":
+			print("\n\n\n\t\t URL no válido...\n\n")
+		else:
+			print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
+	
 	
