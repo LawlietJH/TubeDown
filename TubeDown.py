@@ -117,7 +117,7 @@ def Chk_URL():
 		except Exception as ex:
 			
 			if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
-				print("\n\n\n\t\t URL no válido...")
+				print("\n\n\n\t\t El URL no es válido... o No Hay Conexión...")
 			else:
 				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 				
@@ -130,6 +130,12 @@ def Ctrl_C():
 	except KeyboardInterrupt:
 		Ctrl_C()
 
+
+def Chk_txt(x):
+	if not path.exists(x):
+		print("\n\n\t\t [!] No Existe El Archivo: "+x)
+		os.system('Timeout /nobreak 03 > Nul')
+	
 
 def Lista():
 	pass
@@ -179,15 +185,20 @@ def main():
 	
 	HiddenCursor()
 	
-	if len(sys.argv) == 2:
+	if len(sys.argv) == 3:
 		
 		if sys.argv[1] == "-l" or sys.argv[1] == "--list":
 			Dato = sys.argv[2]
-		print(Dato)
+			print(Dato)
+			
+			Chk_txt(Dato)
+			
+	else:
+
 	else:
 		Modo_de_Uso()
 		
-	Chk_URL()
+	#~ Chk_URL()
 
 main()
 
