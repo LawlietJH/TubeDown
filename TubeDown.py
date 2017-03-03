@@ -13,6 +13,7 @@
 
 #~ ================================================================================================
 
+import time
 import sys
 import os
 
@@ -80,9 +81,11 @@ from pytube import *	#~ Se importa la módulo.
 
 def Modo_de_Uso():
 	
-	Uso = """\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext] | [-h]
-	\n\n\t -l, --list \t\t Se coloca el nombre del archvo\n\t\t\t\t para obtener la lista de URLs.
+	Uso = """\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext][-nr] | [-h]
+	\n\n\t -l, --list \t\t Se coloca el nombre del archivo\n\t\t\t\t para obtener la lista de URLs.
+	\n\t -nr, --norepetir \t Se añade este argumento después\n\t\t\t\t de seleccionar el archivo de URLs.
 	\n\t -h, --help \t\t Muestra el Modo De Uso.
+	\n\n\n   Ejemplo De Uso:\n\n\t\t   TubeDown.py  -l  xD.zion  -nr
 	"""
 	
 	print(Uso)
@@ -253,28 +256,31 @@ def Download_Lista(URLVid):
 		try:
 			print("\n\n\n Video: ", Video.filename)		#~ Se imprime el nombre del video.
 			VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
+			print("\n\n\t\t Descargado!\n")
+			time.sleep(1)
 			break
 			
 		except OSError:
-			Cont += 1
-			Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
+			if NoRepetir == True:
+				print("\n\n\t\t [!] Video Repetido...")		#~ Usando 'TubeDown.py -l URList.ext -nr' (.ext significa extensión)
+				time.sleep(1)								#~ Mostrara esto si el video esta repetido y no lo descargará.
+				break
+			else:
+				Cont += 1
+				Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
 			break
 		
-		#~ except UnboundLocalError:
-			#~ print("\n\n\t Video Repetido...\n")
-			#~ break
-		
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 		
-	print("\n\n\t\t Descargado!\n")
 	
 
 
 xD = True
+NoRepetir = False
 Cont = 0
 Videos = []
 Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
@@ -283,9 +289,28 @@ Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos des
 
 def main():
 	
+	os.system("cls")
+	
+	global NoRepetir
+	
 	HiddenCursor("Hide")
 	
-	if len(sys.argv) == 3:
+	if len(sys.argv) == 4:
+		
+		if sys.argv[1] == "-l" or sys.argv[1] == "--list":
+			Dato = sys.argv[2]
+			
+			if sys.argv[3] == "-nr" or sys.argv[3] == "--norepetir":
+				
+				NoRepetir = True
+				Chk_txt(Dato)
+				Open_txt(Dato)
+				
+				Chk_URL_Lista()
+				
+				exit(0)
+	
+	elif len(sys.argv) == 3:
 		
 		if sys.argv[1] == "-l" or sys.argv[1] == "--list":
 			Dato = sys.argv[2]
@@ -294,6 +319,8 @@ def main():
 			Open_txt(Dato)
 			
 			Chk_URL_Lista()
+			
+			exit(0)
 		
 	elif len(sys.argv) == 2:
 		
