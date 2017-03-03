@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.1.2
+#																v1.1.3
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.1.2"
+Version = "v1.1.3"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -331,6 +331,24 @@ def Tiempo(sec):
 		return '{0:d} minuto(s)'.format(int(sec / 60))
 	else:            # Sin Conversión
 		return '{0:d} segundo(s)'.format(int(sec))
+
+def Bytes_Cadena(bts):
+	bts = float(bts)
+	if bts >= 1024 ** 4:    # Convierte a Terabytes
+		terabytes = bts / 1024 ** 4
+		size = '{:.2f} Tb'.format(terabytes)
+	elif bts >= 1024 ** 3:  # Convierte a Gigabytes
+		gigabytes = bts / 1024 ** 3
+		size = '{:.2f} Gb'.format(gigabytes)
+	elif bts >= 1024 ** 2:  # Convierte a Megabytes
+		megabytes = bts / 1024 ** 2
+		size = '{:.2f} Mb'.format(megabytes)
+	elif bts >= 1024:       # Convierte a Kilobytes
+		kilobytes = bts / 1024
+		size = '{:.2f} Kb'.format(kilobytes)
+	else:                   # Sin Conversión
+		size = '{:.2f} b'.format(bts)
+	return size
 
 
 #~ =========================================================================================================================
