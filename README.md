@@ -3,16 +3,20 @@
 
 ### Modo De Uso:
 
-                 TubeDown.py [-l URList.ext][-nr] | [-h] | [URL]
+                 TubeDown.py [-l URList.ext][-nr] | [-v] | [-h] | [URL]
 
 
-         -l, --list              Se coloca el nombre del archivo
+         -l,  --list             Se coloca el nombre del archivo
                                  para obtener la lista de URLs.
 
          -nr, --norepetir        Se añade este argumento después
                                  de seleccionar el archivo de URLs.
 
-         -h, --help              Muestra el Modo De Uso.
+         -v,  --version          Muestra la versión y autor del Script.
+
+
+         -h,  --help             Muestra el Modo De Uso.
+
 
     https://www.youtube.com/...  Se añade una URL como argumento después 
                                  del nombre del Script.
@@ -50,6 +54,24 @@
         
         ```batch
         TubeDown.py  https://www.youtube.com/video_etc...
+        ```
+
+        
+ * ___Ver el Modo de Uso:___
+ 
+    - Se ejecuta el _Script_ desde consola.
+        
+        ```batch
+        TubeDown.py  -h
+        ```
+
+        
+ * ___Ver Version y Autor del Script:___
+ 
+    - Se ejecuta el _Script_ desde consola.
+        
+        ```batch
+        TubeDown.py  -v
         ```
 
 - - -
