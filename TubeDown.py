@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.1.3
+#																v1.1.4
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.1.3"
+Version = "v1.1.4"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -259,7 +259,7 @@ def Download():
 		
 		try:
 			print("\n\n\n [+] Video: ", Video.filename, "\n\n")		#~ Se imprime el nombre del video.
-			bar = progressBar()
+			bar = BarraProgreso()
 			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
 			
 			if URLEnArgv == True:			#~ Si se paso la URL en los argumentos se descargará solo ese video.
@@ -295,6 +295,7 @@ def Download_Lista(URLVid):
 		
 		try:
 			print("\n\n\n [+] Video: ", Video.filename, "\nn")		#~ Se imprime el nombre del video.
+			bar = BarraProgreso()
 			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
 			time.sleep(1)
 			break
@@ -322,6 +323,16 @@ def Download_Lista(URLVid):
 #~ =========================================================================================================================
 #~ ======================================== INICIO =========================================================================
 #~ =========================================================================================================================
+
+
+class BarraProgreso:
+	
+	def __init__(self, barlength=20):
+		self.barlength = barlength
+		self.position = 0
+		self.longest = 0
+	
+	
 
 
 def Tiempo(sec):
