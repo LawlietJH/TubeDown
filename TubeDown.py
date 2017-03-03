@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.1.5
+#																v1.1.6
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.1.5"
+Version = "v1.1.6"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -331,6 +331,22 @@ class BarraProgreso:
 		self.barlength = barlength
 		self.position = 0
 		self.longest = 0
+	
+	def Progreso(self, cur, total, start):
+		currentper = cur / total		
+		elapsed = int(time.clock() - start) + 1
+		curbar = int(currentper * self.barlength)
+		bar = '\r  [' + '='.join(['' for _ in range(curbar)])  # Imprimir Progreso
+		bar += '>'
+		bar += ' '.join(['' for _ in range(int(self.barlength - curbar))]) + ']  '  # Espacio Restante en Progreso
+		bar += Bytes_Cadena(cur / elapsed) + '/s  '  # Calcula la Velocidad de Descarga por Segundo
+		bar += Tiempo((total - cur) * (elapsed / cur)) + '    '  # Calcula El Tiempo Restante
+		
+		if len(bar) > self.longest:
+			self.longest = len(bar)
+			bar += ' '.join(['' for _ in range(self.longest - len(bar))])
+			
+		sys.stdout.write(bar)
 	
 	def End(self, *args):
 		print("\n\n\n\n\t\t Descargado!")
