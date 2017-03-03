@@ -72,7 +72,6 @@ def Chk_Dep():
 		
 	except Exception as ex:
 		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
-	
 
 
 Chk_Dep()				#~ Se instala el módulo pytube si esta no esta instalada.
@@ -80,7 +79,12 @@ from pytube import *	#~ Se importa la módulo.
 
 
 
-def Ruta():
+def Modo_de_Uso():
+	pass
+
+
+
+def Ruta_Descargas():
 	
 	Ruta = os.getcwd()							#~ Se Obtiene La Ruta Actual Del Script
 	
@@ -94,7 +98,31 @@ def Ruta():
 	return Ruta
 
 
-def Chk_URL():
+def Ruta_txt():
+	
+	Ruta = os.getcwd()			#~ Se Obtiene La Ruta Actual Del Script
+	
+	os.chdir("..")				#~ Nos Situamos En La Carpeta Del Script 
+	
+	Ruta = os.getcwd()			#~ Guardamos La Ruta.
+	
+	return Ruta
+	
+
+
+def Chk_txt(x):
+	
+	Ruta_txt()
+	
+	if not os.path.exists(x):
+		print("\n\n\t\t [!] No Existe El Archivo: "+x)
+		os.system('Timeout /nobreak 03 > Nul')
+		exit(0)
+	else:
+		return True
+	
+
+def Chk_URL(URL):
 	
 	while xD:
 		
@@ -102,7 +130,7 @@ def Chk_URL():
 		
 		try:
 			
-			Download()			#~ Método para descargar videos.
+			Download(URL)			#~ Método para descargar videos.
 			
 		except ValueError:								#~ Por si se escribe algo que no sea una URL
 			print("\n\n\n\t\t No es una URL...")
@@ -122,6 +150,7 @@ def Chk_URL():
 				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 				
 
+
 def Ctrl_C():
 	print("\n\n\t\t Cancelado...")
 	try:
@@ -131,24 +160,14 @@ def Ctrl_C():
 		Ctrl_C()
 
 
-def Chk_txt(x):
-	if not path.exists(x):
-		print("\n\n\t\t [!] No Existe El Archivo: "+x)
-		os.system('Timeout /nobreak 03 > Nul')
-	
 
 def Lista():
 	pass
 	
 
-def Modo_de_Uso():
-	pass
-
-
-def Download():
+def Download(URL):
 	
-	URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.
-	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
+	Video = YouTube(URL)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
 	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
 	VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
 	Nomb = Nombre = VideoHD.filename
@@ -176,8 +195,8 @@ def Download():
 
 
 xD = True
-
-Ruta = Ruta()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
+Videos = []
+Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
 
 	
 
@@ -189,16 +208,18 @@ def main():
 		
 		if sys.argv[1] == "-l" or sys.argv[1] == "--list":
 			Dato = sys.argv[2]
-			print(Dato)
 			
 			Chk_txt(Dato)
 			
-	else:
-
+			Open_txt()
+			
+			
+	
 	else:
 		Modo_de_Uso()
 		
-	#~ Chk_URL()
+	#~ URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.
+	#~ Chk_URL(URLVid)
 
 main()
 
