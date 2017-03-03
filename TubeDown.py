@@ -18,7 +18,7 @@ import os
 
 
 #~ Función Que Permite Esconder El Cursor de la Pantalla (La rayita que parpadea xD).
-def HiddenCursor(imp="Hidden"):
+def HiddenCursor(imp="Hide"):
 	
 	#~ imp = imp.title()		#Devuelve la cadena solo con la primera letra de cada palabra en mayuscula
 	imp = imp.capitalize()		#Devuelve la cadena solo con la primera letra de la primer palabra en mayuscula
@@ -53,7 +53,7 @@ def HiddenCursor(imp="Hidden"):
 			sys.stdout.write("\033[?25h")
 			sys.stdout.flush()
 			
-	if imp == "Hidden":
+	if imp == "Hide":
 		hide_cursor()
 	elif imp =="Show":
 		show_cursor()
@@ -80,11 +80,12 @@ from pytube import *	#~ Se importa la módulo.
 
 def Modo_de_Uso():
 	
-	Modo_de_Uso"""\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext] | [-h]
-	\n\n\t -l, --list \t\t Se coloca el nombre del archvio\n\t\t\t\t para obtener la lista de URLs.
+	Uso = """\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext] | [-h]
+	\n\n\t -l, --list \t\t Se coloca el nombre del archvo\n\t\t\t\t para obtener la lista de URLs.
 	\n\t -h, --help \t\t Muestra el Modo De Uso.
-	""")
-
+	"""
+	
+	print(Uso)
 
 
 def Ruta_Descargas():
@@ -223,7 +224,7 @@ Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos des
 
 def main():
 	
-	HiddenCursor()
+	HiddenCursor("Hide")
 	
 	if len(sys.argv) == 3:
 		
@@ -232,6 +233,13 @@ def main():
 			
 			Chk_txt(Dato)
 			Open_txt(Dato)
+		
+	elif len(sys.argv) == 2:
+		
+		if sys.argv[1] == "-h" or sys.argv[1] == "--help":
+			Modo_de_Uso()
+		else:
+			Modo_de_Uso()
 	
 	elif len(sys.argv) == 1:
 		Chk_URL()
@@ -240,4 +248,4 @@ def main():
 		Modo_de_Uso()
 
 main()
-
+HiddenCursor("Show")
