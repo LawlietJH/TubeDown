@@ -8,14 +8,14 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-
+#																v1.1.1
 import time
 import sys
 import os
 
 
 Autor = "LawlietJH"
-Version = "v1.1.0"
+Version = "v1.1.1"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -39,8 +39,8 @@ def Dat():
 	
 	Nombre = BTD
 	Autor = BA
-	Version = "\n\n\n{:^80}".format("1.1.0")
-	print(Nombre, "\n\n", Autor, Version)
+	Ver = "\n\n\n{:^80}".format(Version)
+	print(Nombre, "\n\n", Autor, Ver)
 	
 
 #~ Función Que Permite Esconder El Cursor de la Pantalla (La rayita que parpadea xD).
@@ -108,9 +108,10 @@ def Modo_de_Uso():
 	
 	Dat()
 	
-	Uso = """\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext][-nr] | [-h] | [URL]
+	Uso = """\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext][-nr] | [-v] | [-h] | [URL]
 	\n\n\t -l,  --list \t\t Se coloca el nombre del archivo\n\t\t\t\t para obtener la lista de URLs.
 	\n\t -nr, --norepetir \t Se añade este argumento después\n\t\t\t\t de seleccionar el archivo de URLs.
+	\n\t -v,  --version \t\t Muestra la versión y autor del Script.
 	\n\t -h,  --help \t\t Muestra el Modo De Uso.
 	\n\n https://www.youtube.com/...\t Se añade una URL como argumento después \n\t\t\t\t del nombre del Script.
 	\t\t\t Sólo se descargará ese video.
@@ -369,6 +370,8 @@ def main():
 		
 		if sys.argv[1] == "-h" or sys.argv[1] == "--help":
 			Modo_de_Uso()
+		elif sys.argv[1] == "-v" or sys.argv[1] =="--version":
+			Dat()
 		elif "https://www.youtube.com/" in sys.argv[1]:
 			URLEnArgv = True
 			Chk_URL()
