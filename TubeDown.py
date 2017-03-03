@@ -153,6 +153,35 @@ def Chk_URL():
 				print("\n\n\n\t\t El URL no es válido... o No Hay Conexión...")
 			else:
 				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
+
+
+def Chk_URL_Lista():
+	
+	for URL in Videos:
+		
+		global Cont
+		Cont = 0
+		
+		try:
+			
+			Download_Lista(URL)			#~ Método para descargar videos.
+			
+		except ValueError:								#~ Por si se escribe algo que no sea una URL
+			print("\n\n\n\t\t No es una URL...")
+			
+		except IndexError:								#~ Por si no se escribe nada.
+			print("\n\n\n\t\t Escribe una URL...")	
+			
+		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
+			Ctrl_C()
+			exit(0)
+			
+		except Exception as ex:
+			
+			if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
+				print("\n\n\n\t\t El URL no es válido... o No Hay Conexión...")
+			else:
+				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 				
 
 
@@ -173,10 +202,6 @@ def Open_txt(X):
 	
 	for linea in Archivo:
 		Videos.append(linea)	#~ Se añade cada URL del archivo a la lista .
-	
-
-def Download_Lista():
-	pass
 	
 
 def Download():
@@ -233,12 +258,14 @@ def main():
 			
 			Chk_txt(Dato)
 			Open_txt(Dato)
+			
+			Chk_URL_Lista()
 		
 	elif len(sys.argv) == 2:
 		
 		if sys.argv[1] == "-h" or sys.argv[1] == "--help":
 			Modo_de_Uso()
-		else:
+		else: 
 			Modo_de_Uso()
 	
 	elif len(sys.argv) == 1:
