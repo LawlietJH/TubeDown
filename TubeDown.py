@@ -79,7 +79,11 @@ from pytube import *	#~ Se importa la módulo.
 
 
 def Modo_de_Uso():
-	pass
+	
+	Modo_de_Uso"""\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext] | [-h]
+	\n\n\t -l, --list \t\t Se coloca el nombre del archvio\n\t\t\t\t para obtener la lista de URLs.
+	\n\t -h, --help \t\t Muestra el Modo De Uso.
+	""")
 
 
 
@@ -125,6 +129,7 @@ def Chk_URL():
 	
 	while xD:
 		
+		global Cont
 		Cont = 0
 		
 		try:
@@ -175,6 +180,8 @@ def Download_Lista():
 
 def Download():
 	
+	global Cont
+	
 	URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.	
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
 	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
@@ -195,15 +202,20 @@ def Download():
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
 			break
-			
+		
+		#~ except UnboundLocalError:
+			#~ print("\n\n\t Video Repetido...\n")
+			#~ break
+		
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 		
-	print("\n\n Descargado!\n")
+	print("\n\n\t\t Descargado!\n")
 
 
 
 xD = True
+Cont = 0
 Videos = []
 Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
 
