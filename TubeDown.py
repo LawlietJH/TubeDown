@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.1.6
+#																v1.1.7
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.1.6"
+Version = "v1.1.7"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -333,10 +333,16 @@ class BarraProgreso:
 		self.longest = 0
 	
 	def Progreso(self, cur, total, start):
-		currentper = cur / total		
+		currentper = cur / total
+		
+		TamTotal = Bytes_Cadena(total)
+		TamActual = Bytes_Cadena(cur)
+		
 		elapsed = int(time.clock() - start) + 1
 		curbar = int(currentper * self.barlength)
-		bar = '\r  [' + '='.join(['' for _ in range(curbar)])  # Imprimir Progreso
+		bar = '\r ' + TamActual			#~ Tamaño Descargado
+		bar += ' / ' + TamTotal			#~ tamaño Total
+		bar += '  [' + '='.join(['' for _ in range(curbar)])  # Imprimir Progreso
 		bar += '>'
 		bar += ' '.join(['' for _ in range(int(self.barlength - curbar))]) + ']  '  # Espacio Restante en Progreso
 		bar += Bytes_Cadena(cur / elapsed) + '/s  '  # Calcula la Velocidad de Descarga por Segundo
