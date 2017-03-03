@@ -1,6 +1,7 @@
 # TubeDown
 ## Descarga videos de YouTube con Python
 
+- - -
 
 ### Modo De Uso:
 
@@ -17,6 +18,32 @@
 
 
 
-   Ejemplo De Uso:
+### Ejemplo De Uso:
 
                    TubeDown.py  -l  xD.zion  -nr
+
+- - -
+
+
+ * Descargar videos de uno en uno:
+ 
+    - Solo se ejecuta el Script ya sea directamente o desde consola.
+        
+        ```batch
+        TubeDown.py
+        ```
+ * Descargar una lista de videos:
+ 
+    - Se ejecuta el Script desde consola.
+        
+        ```batch
+        TubeDown.py  -l  URList.txt
+        ```
+        
+ * Descargar una lista de videos y no descargar los ya existentes:
+ 
+    - Se ejecuta el Script desde consola.
+        
+        ```batch
+        TubeDown.py  -l  URList.txt  -nr
+        ```
