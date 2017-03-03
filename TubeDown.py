@@ -8,14 +8,18 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.1.1
+#																v1.1.2
+
+import urllib.request
+import urllib.error
+
 import time
 import sys
 import os
-
+import re
 
 Autor = "LawlietJH"
-Version = "v1.1.1"
+Version = "v1.1.2"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -254,11 +258,11 @@ def Download():
 	while xD:
 		
 		try:
-			print("\n\n\n [+] Video: ", Video.filename)		#~ Se imprime el nombre del video.
-			VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
+			print("\n\n\n [+] Video: ", Video.filename, "\n\n")		#~ Se imprime el nombre del video.
+			bar = progressBar()
+			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
 			
 			if URLEnArgv == True:			#~ Si se paso la URL en los argumentos se descargará solo ese video.
-				print("\n\n\t\t [*] Descargado!\n")
 				exit(0)
 			
 			break
@@ -269,16 +273,13 @@ def Download():
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
+			exit(0)
 			break
-		
-		#~ except UnboundLocalError:
-			#~ print("\n\n\t Video Repetido...\n")
-			#~ break
 		
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
-		
-	print("\n\n\t\t [*] Descargado!\n")
+			system("Pause")
+			
 
 
 def Download_Lista(URLVid):
@@ -293,9 +294,8 @@ def Download_Lista(URLVid):
 	while xD:
 		
 		try:
-			print("\n\n\n [+] Video: ", Video.filename)		#~ Se imprime el nombre del video.
-			VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
-			print("\n\n\t\t [*] Descargado!\n")
+			print("\n\n\n [+] Video: ", Video.filename, "\nn")		#~ Se imprime el nombre del video.
+			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
 			time.sleep(1)
 			break
 			
@@ -310,12 +310,35 @@ def Download_Lista(URLVid):
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
+			exit(0)
 			break
 		
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 		
 	
+
+
+#~ =========================================================================================================================
+#~ ======================================== INICIO =========================================================================
+#~ =========================================================================================================================
+
+
+def Tiempo(sec):
+	if sec >= 3600:  # Convierte a Horas
+		return '{0:d} hora(s)'.format(int(sec / 3600))
+	elif sec >= 60:  # Convierte a Minutos
+		return '{0:d} minuto(s)'.format(int(sec / 60))
+	else:            # Sin Conversión
+		return '{0:d} segundo(s)'.format(int(sec))
+
+
+#~ =========================================================================================================================
+#~ ============================================= FIN =======================================================================
+#~ =========================================================================================================================
+
+
+
 
 
 xD = True
