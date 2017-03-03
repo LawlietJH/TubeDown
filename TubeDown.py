@@ -7,7 +7,7 @@
 #   ██║   ██║   ██║██╔══██╗██╔══╝  ██║  ██║██║   ██║██║███╗██║██║╚██╗██║
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
-#                                                          By: LawlietJH
+#                                                         By: LawlietJH
 
 import time
 import sys
@@ -25,15 +25,23 @@ BTD = r"""
        ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
        ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝  
 """
+#~ Fuente: ANSI Shadow, Página: http://patorjk.com/software/taag
 
 BA = r"""
                             ╦  ┌─┐┬ ┬┬  ┬┌─┐┌┬┐╦╦ ╦
                             ║  ├─┤││││  │├┤  │ ║╠═╣
                             ╩═╝┴ ┴└┴┘┴─┘┴└─┘ ┴╚╝╩ ╩
 """
+#~ Fuente: Calvin S, Página: http://patorjk.com/software/taag
 
 
-
+def Dat():
+	
+	Nombre = BTD
+	Autor = BA
+	Version = "\n\n\n{:^80}".format("1.1.0")
+	print(Nombre, "\n\n", Autor, Version)
+	
 
 #~ Función Que Permite Esconder El Cursor de la Pantalla (La rayita que parpadea xD).
 def HiddenCursor(imp="Hide"):
@@ -97,6 +105,8 @@ from pytube import *	#~ Se importa la módulo.
 
 
 def Modo_de_Uso():
+	
+	Dat()
 	
 	Uso = """\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext][-nr] | [-h]
 	\n\n\t -l, --list \t\t Se coloca el nombre del archivo\n\t\t\t\t para obtener la lista de URLs.
