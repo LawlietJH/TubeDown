@@ -1,6 +1,8 @@
 # TubeDown
 ## Descarga videos de YouTube con Python
 
+
+
 ### Modo De Uso:
 
                  TubeDown.py [-l URList.ext][-nr] | [-v] | [-h] | [URL]
@@ -18,9 +20,8 @@
          -h,  --help             Muestra el Modo De Uso.
 
 
-    https://www.youtube.com/...  Se añade una URL como argumento después 
-                                 del nombre del Script.
-                                 Sólo se descargará ese video.
+    https://www.youtube.com/...  Se añade la URL como argumento y
+                                 sólo se descargará ese video.
 
 - - -
 
@@ -66,7 +67,7 @@
         ```
 
         
- * ___Ver Version y Autor del Script:___
+ * ___Ver Versión y Autor del Script:___
  
     - Se ejecuta el _Script_ desde consola.
         
