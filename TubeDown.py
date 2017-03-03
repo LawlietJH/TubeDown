@@ -12,6 +12,7 @@
 #~ print("\n\n", VideoHD)
 
 #~ ================================================================================================
+
 import os
 
 
@@ -26,15 +27,11 @@ def Chk_Dep():
 		
 	except Exception as ex:
 		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
+	
 
-#~ os.system("pip uninstall pytube -y")# > Nul")
+Chk_Dep()				#~ Se instala el módulo pytube si esta no esta instalada.
+from pytube import *	#~ Se importa la módulo.
 
-
-Chk_Dep()
-from pytube import *
-#~ from pprint import pprint
-
-#~ print(dir(YouTube.filter))
 
 def Ruta():
 	
@@ -50,45 +47,61 @@ def Ruta():
 	return Ruta
 
 
+def Lista():
+	pass
+	
+
+
+def Download():
+	
+	URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.
+	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
+	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
+	VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
+	Nomb = Nombre = VideoHD.filename
+	
+	while xD:
+			
+		try:
+			#~ if not os.path.exists(Video.filename):
+				
+			print("\n\n\n Video: ", Video.filename)		#~ Se imprime el nombre del video.
+			VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
+			break
+			
+			#~ VideoHD.download(r""+Ruta)					#~ Si ya existe el video se provoca el error para que aumente el contador.
+			
+		except OSError:
+			Cont += 1
+			Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
+			
+		except Exception as ex:
+			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
+		
+	print("\n\n Descargado!\n")
+
+
 
 xD = True
 
-Ruta = Ruta()			#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
+Ruta = Ruta()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
+
+	
+	
+#~ Dato = input("\n\n\t Descargar una Lista [S/N]: ")
 
 while xD:
 	
 	Cont = 0
-	try:
-		URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.
-		Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
-		#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
-		VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
-		Nomb = Nombre = VideoHD.filename
-		
-		while xD:
-			
-			try:
-				#~ if not os.path.exists(Video.filename):
-					
-				print("\n\n\n Video: ", Video.filename)	#~ Se imprime el nombre del video.
-				VideoHD.download(r""+Ruta)				#~ Descargamos el video seleccionado.
-				break
-					
-				#~ VideoHD.download(r""+Ruta)					#~ Si ya existe el video se provoca el error para que aumente el contador.
-				
-			except OSError:
-				Cont += 1
-				Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
-			
-			except Exception as ex:
-				print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 	
-		print("\n\n Descargado!\n")
+	try:
 		
-	except ValueError:
+		Download()			#~ Método para descargar videos.
+		
+	except ValueError:								#~ Por si se escribe algo que no sea una URL
 		print("\n\n\n\t\t No es una URL...")
 		
-	except IndexError:
+	except IndexError:								#~ Por si no se escribe nada.
 		print("\n\n\n\t\t Escribe una URL...")	
 		
 	except Exception as ex:
@@ -98,4 +111,5 @@ while xD:
 		else:
 			print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 	
-	
+
+
