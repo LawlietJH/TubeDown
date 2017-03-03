@@ -17,13 +17,6 @@ import sys
 import os
 
 
-
-xD = True
-
-Ruta = Ruta()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
-
-
-
 def Chk_Dep():
 	
 	try:
@@ -57,7 +50,6 @@ def Ruta():
 	return Ruta
 
 
-
 def Ctrl_C():
 	print("\n\n\t\t Cancelado...")
 	try:
@@ -70,6 +62,9 @@ def Ctrl_C():
 def Lista():
 	pass
 	
+
+def Modo_de_Uso():
+	pass
 
 
 def Download():
@@ -100,12 +95,24 @@ def Download():
 		
 	print("\n\n Descargado!\n")
 
+
+
+xD = True
+
+Ruta = Ruta()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
+
 	
 
 def main():
 	
-	#~ Dato = input("\n\n\t Descargar una Lista [S/N]: ")
-	
+	if len(sys.argv) == 2:
+		
+		if sys.argv[1] == "-l" or sys.argv[1] == "--list":
+			Dato = sys.argv[2]
+		print(Dato)
+	else:
+		Modo_de_Uso()
+		
 	while xD:
 		
 		Cont = 0
