@@ -78,7 +78,6 @@ Chk_Dep()				#~ Se instala el módulo pytube si esta no esta instalada.
 from pytube import *	#~ Se importa la módulo.
 
 
-
 def Modo_de_Uso():
 	pass
 
@@ -122,7 +121,7 @@ def Chk_txt(x):
 		return True
 	
 
-def Chk_URL(URL):
+def Chk_URL():
 	
 	while xD:
 		
@@ -130,7 +129,7 @@ def Chk_URL(URL):
 		
 		try:
 			
-			Download(URL)			#~ Método para descargar videos.
+			Download()			#~ Método para descargar videos.
 			
 		except ValueError:								#~ Por si se escribe algo que no sea una URL
 			print("\n\n\n\t\t No es una URL...")
@@ -160,14 +159,24 @@ def Ctrl_C():
 		Ctrl_C()
 
 
+def Open_txt(X):
+	
+	global Videos
+	
+	Archivo = open(X,"r")	#~ Se abre el archivo.
+	
+	for linea in Archivo:
+		Videos.append(linea)	#~ Se añade cada URL del archivo a la lista .
+	
 
-def Lista():
+def Download_Lista():
 	pass
 	
 
-def Download(URL):
+def Download():
 	
-	Video = YouTube(URL)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
+	URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.	
+	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
 	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
 	VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
 	Nomb = Nombre = VideoHD.filename
@@ -210,16 +219,13 @@ def main():
 			Dato = sys.argv[2]
 			
 			Chk_txt(Dato)
-			
-			Open_txt()
-			
-			
+			Open_txt(Dato)
+	
+	elif len(sys.argv) == 1:
+		Chk_URL()
 	
 	else:
 		Modo_de_Uso()
-		
-	#~ URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.
-	#~ Chk_URL(URLVid)
 
 main()
 
