@@ -239,6 +239,40 @@ def Download():
 	print("\n\n\t\t Descargado!\n")
 
 
+def Download_Lista(URLVid):
+		
+	global Cont
+	
+	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
+	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
+	VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
+	Nomb = Nombre = VideoHD.filename
+	
+	while xD:
+		
+		try:
+			print("\n\n\n Video: ", Video.filename)		#~ Se imprime el nombre del video.
+			VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
+			break
+			
+		except OSError:
+			Cont += 1
+			Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
+			
+		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
+			Ctrl_C()
+			break
+		
+		#~ except UnboundLocalError:
+			#~ print("\n\n\t Video Repetido...\n")
+			#~ break
+		
+		except Exception as ex:
+			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
+		
+	print("\n\n\t\t Descargado!\n")
+	
+
 
 xD = True
 Cont = 0
