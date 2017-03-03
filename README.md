@@ -17,11 +17,6 @@
          -h, --help              Muestra el Modo De Uso.
 
 
-
-### Ejemplo De Uso:
-
-                   TubeDown.py  -l  xD.zion  -nr
-
 - - -
 
 
@@ -47,3 +42,11 @@
         ```batch
         TubeDown.py  -l  URList.txt  -nr
         ```
+
+- - -
+
+### Ejemplo De Uso:
+
+```batch
+                      TubeDown.py  -l  xD.zion  -nr
+```
