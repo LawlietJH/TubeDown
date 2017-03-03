@@ -50,6 +50,34 @@ def Ruta():
 	return Ruta
 
 
+def Chk_URL():
+	
+	while xD:
+		
+		Cont = 0
+		
+		try:
+			
+			Download()			#~ Método para descargar videos.
+			
+		except ValueError:								#~ Por si se escribe algo que no sea una URL
+			print("\n\n\n\t\t No es una URL...")
+			
+		except IndexError:								#~ Por si no se escribe nada.
+			print("\n\n\n\t\t Escribe una URL...")	
+			
+		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
+			Ctrl_C()
+			exit(0)
+			
+		except Exception as ex:
+			
+			if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
+				print("\n\n\n\t\t URL no válido...")
+			else:
+				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
+				
+
 def Ctrl_C():
 	print("\n\n\t\t Cancelado...")
 	try:
@@ -113,30 +141,7 @@ def main():
 	else:
 		Modo_de_Uso()
 		
-	while xD:
-		
-		Cont = 0
-		
-		try:
-			
-			Download()			#~ Método para descargar videos.
-			
-		except ValueError:								#~ Por si se escribe algo que no sea una URL
-			print("\n\n\n\t\t No es una URL...")
-			
-		except IndexError:								#~ Por si no se escribe nada.
-			print("\n\n\n\t\t Escribe una URL...")	
-			
-		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
-			Ctrl_C()
-			
-		except Exception as ex:
-			
-			if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
-				print("\n\n\n\t\t URL no válido...")
-			else:
-				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
-				
+	Chk_URL()
 
 main()
 
