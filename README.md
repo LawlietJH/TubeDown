@@ -3,7 +3,7 @@
 
 ### Modo De Uso:
 
-                 TubeDown.py [-l URList.ext][-nr] | [-h]
+                 TubeDown.py [-l URList.ext][-nr] | [-h] | [URL]
 
 
          -l, --list              Se coloca el nombre del archivo
@@ -14,6 +14,9 @@
 
          -h, --help              Muestra el Modo De Uso.
 
+    https://www.youtube.com/...  Se añade una URL como argumento después 
+                                 del nombre del Script.
+                                 Sólo se descargará ese video.
 
 - - -
 
@@ -40,11 +43,21 @@
         ```batch
         TubeDown.py  -l  URList.txt  -nr
         ```
+        
+ * ___Descargar sólo un video:___
+ 
+    - Se ejecuta el _Script_ desde consola.
+        
+        ```batch
+        TubeDown.py  https://www.youtube.com/video_etc...
+        ```
 
 - - -
 
 ### Ejemplo De Uso:
 
 ```batch
-                      TubeDown.py  -l  xD.zion  -nr
+Ejemplo 1 - Lista de URLs:          TubeDown.py  -l  xD.zion  -nr
+                      
+Ejemplo 2 - De a uno solo:          TubeDown.py  https://www.youtube.com/video_etc...
 ```
