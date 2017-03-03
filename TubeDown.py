@@ -108,11 +108,14 @@ def Modo_de_Uso():
 	
 	Dat()
 	
-	Uso = """\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext][-nr] | [-h]
-	\n\n\t -l, --list \t\t Se coloca el nombre del archivo\n\t\t\t\t para obtener la lista de URLs.
+	Uso = """\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext][-nr] | [-h] | [URL]
+	\n\n\t -l,  --list \t\t Se coloca el nombre del archivo\n\t\t\t\t para obtener la lista de URLs.
 	\n\t -nr, --norepetir \t Se añade este argumento después\n\t\t\t\t de seleccionar el archivo de URLs.
-	\n\t -h, --help \t\t Muestra el Modo De Uso.
-	\n\n\n   Ejemplo De Uso:\n\n\t\t   TubeDown.py  -l  xD.zion  -nr
+	\n\t -h,  --help \t\t Muestra el Modo De Uso.
+	\n\n https://www.youtube.com/...\t Se añade una URL como argumento después \n\t\t\t\t del nombre del Script.
+	\t\t\t Sólo se descargará ese video.
+	\n\n\n   Ejemplos De Uso:\n\n\t\t   TubeDown.py  -l  xD.zion  -nr
+	\n\n\t\t   TubeDown.py  http://www.youtube.com/video_etc...
 	"""
 	
 	print(Uso)
@@ -168,10 +171,10 @@ def Chk_URL():
 			Download()			#~ Método para descargar videos.
 			
 		except ValueError:								#~ Por si se escribe algo que no sea una URL
-			print("\n\n\n\t\t No es una URL...")
+			print("\n\n\n\t\t [!] No es una URL...")
 			
 		except IndexError:								#~ Por si no se escribe nada.
-			print("\n\n\n\t\t Escribe una URL...")	
+			print("\n\n\n\t\t [!] Escribe una URL...")	
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
@@ -180,7 +183,7 @@ def Chk_URL():
 		except Exception as ex:
 			
 			if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
-				print("\n\n\n\t\t El URL no es válido... o No Hay Conexión...")
+				print("\n\n\n\t\t [!] El URL no es válido... o Quizá No Hay Conexión...")
 			else:
 				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 
@@ -197,10 +200,10 @@ def Chk_URL_Lista():
 			Download_Lista(URL)			#~ Método para descargar videos.
 			
 		except ValueError:								#~ Por si se escribe algo que no sea una URL
-			print("\n\n\n\t\t No es una URL...")
+			print("\n\n\n\t\t [!] No es una URL...")
 			
 		except IndexError:								#~ Por si no se escribe nada.
-			print("\n\n\n\t\t Escribe una URL...")	
+			print("\n\n\n\t\t [!] Escribe una URL...")	
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
@@ -209,14 +212,14 @@ def Chk_URL_Lista():
 		except Exception as ex:
 			
 			if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
-				print("\n\n\n\t\t El URL no es válido... o No Hay Conexión...")
+				print("\n\n\n\t\t [!] El URL no es válido... o Quizá No Hay Conexión...")
 			else:
 				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 				
 
 
 def Ctrl_C():
-	print("\n\n\t\t Cancelado...")
+	print("\n\n\t\t [!] Cancelado...")
 	try:
 		os.system("timeout /nobreak 03 > Nul")
 		return
@@ -242,7 +245,7 @@ def Download():
 	if URLEnArgv == True:				#~ Si se paso la URL en los argumentos se descargará solo ese video.
 		URLVid = sys.argv[1]
 	else:
-		URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.	
+		URLVid = input("\n\n\n\t [+] URL: ")		#~ Escribimos la URL del Video a Descargar.	
 	
 	
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
@@ -253,10 +256,11 @@ def Download():
 	while xD:
 		
 		try:
-			print("\n\n\n Video: ", Video.filename)		#~ Se imprime el nombre del video.
+			print("\n\n\n [+] Video: ", Video.filename)		#~ Se imprime el nombre del video.
 			VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
 			
 			if URLEnArgv == True:			#~ Si se paso la URL en los argumentos se descargará solo ese video.
+				print("\n\n\t\t [*] Descargado!\n")
 				exit(0)
 			
 			break
@@ -276,7 +280,7 @@ def Download():
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 		
-	print("\n\n\t\t Descargado!\n")
+	print("\n\n\t\t [*] Descargado!\n")
 
 
 def Download_Lista(URLVid):
@@ -291,9 +295,9 @@ def Download_Lista(URLVid):
 	while xD:
 		
 		try:
-			print("\n\n\n Video: ", Video.filename)		#~ Se imprime el nombre del video.
+			print("\n\n\n [+] Video: ", Video.filename)		#~ Se imprime el nombre del video.
 			VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
-			print("\n\n\t\t Descargado!\n")
+			print("\n\n\t\t [*] Descargado!\n")
 			time.sleep(1)
 			break
 			
