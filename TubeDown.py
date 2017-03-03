@@ -13,7 +13,15 @@
 
 #~ ================================================================================================
 
+import sys
 import os
+
+
+
+xD = True
+
+Ruta = Ruta()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
+
 
 
 def Chk_Dep():
@@ -29,8 +37,10 @@ def Chk_Dep():
 		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
 	
 
+
 Chk_Dep()				#~ Se instala el módulo pytube si esta no esta instalada.
 from pytube import *	#~ Se importa la módulo.
+
 
 
 def Ruta():
@@ -47,6 +57,16 @@ def Ruta():
 	return Ruta
 
 
+
+def Ctrl_C():
+	print("\n\n\t\t Cancelado...")
+	try:
+		os.system("timeout /nobreak 03 > Nul")
+		return
+	except KeyboardInterrupt:
+		Ctrl_C()
+
+
 def Lista():
 	pass
 	
@@ -61,30 +81,24 @@ def Download():
 	Nomb = Nombre = VideoHD.filename
 	
 	while xD:
-			
+		
 		try:
-			#~ if not os.path.exists(Video.filename):
-				
 			print("\n\n\n Video: ", Video.filename)		#~ Se imprime el nombre del video.
 			VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
 			break
-			
-			#~ VideoHD.download(r""+Ruta)					#~ Si ya existe el video se provoca el error para que aumente el contador.
 			
 		except OSError:
 			Cont += 1
 			Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
 			
+		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
+			Ctrl_C()
+			break
+			
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 		
 	print("\n\n Descargado!\n")
-
-
-
-xD = True
-
-Ruta = Ruta()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
 
 	
 
@@ -106,14 +120,16 @@ def main():
 		except IndexError:								#~ Por si no se escribe nada.
 			print("\n\n\n\t\t Escribe una URL...")	
 			
+		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
+			Ctrl_C()
+			
 		except Exception as ex:
 			
 			if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
 				print("\n\n\n\t\t URL no válido...")
 			else:
 				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
-	
-
+				
 
 main()
 
