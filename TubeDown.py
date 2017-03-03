@@ -233,12 +233,18 @@ def Open_txt(X):
 	for linea in Archivo:
 		Videos.append(linea)	#~ Se añade cada URL del archivo a la lista .
 	
+	Archivo.close()
 
 def Download():
 	
 	global Cont
 	
-	URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.	
+	if URLEnArgv == True:				#~ Si se paso la URL en los argumentos se descargará solo ese video.
+		URLVid = sys.argv[1]
+	else:
+		URLVid = input("\n\n\n\t URL: ")		#~ Escribimos la URL del Video a Descargar.	
+	
+	
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
 	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
 	VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
@@ -249,6 +255,10 @@ def Download():
 		try:
 			print("\n\n\n Video: ", Video.filename)		#~ Se imprime el nombre del video.
 			VideoHD.download(r""+Ruta)					#~ Descargamos el video seleccionado.
+			
+			if URLEnArgv == True:			#~ Si se paso la URL en los argumentos se descargará solo ese video.
+				exit(0)
+			
 			break
 			
 		except OSError:
@@ -308,6 +318,7 @@ def Download_Lista(URLVid):
 
 xD = True
 NoRepetir = False
+URLEnArgv = False
 Cont = 0
 Videos = []
 Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
@@ -319,6 +330,7 @@ def main():
 	os.system("cls")
 	
 	global NoRepetir
+	global URLEnArgv
 	
 	HiddenCursor("Hide")
 	
@@ -353,6 +365,9 @@ def main():
 		
 		if sys.argv[1] == "-h" or sys.argv[1] == "--help":
 			Modo_de_Uso()
+		elif "https://www.youtube.com/" in sys.argv[1]:
+			URLEnArgv = True
+			Chk_URL()
 		else: 
 			Modo_de_Uso()
 	
