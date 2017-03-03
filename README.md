@@ -1,8 +1,6 @@
 # TubeDown
 ## Descarga videos de YouTube con Python
 
-- - -
-
 ### Modo De Uso:
 
                  TubeDown.py [-l URList.ext][-nr] | [-h]
@@ -20,24 +18,24 @@
 - - -
 
 
- * Descargar videos de uno en uno:
+ * ___Descargar videos de uno en uno:___
  
-    - Solo se ejecuta el Script ya sea directamente o desde consola.
+    - Solo se ejecuta el _Script_ ya sea directamente o desde consola.
         
         ```batch
         TubeDown.py
         ```
- * Descargar una lista de videos:
+ * ___Descargar una lista de videos:___
  
-    - Se ejecuta el Script desde consola.
+    - Se ejecuta el _Script_ desde consola.
         
         ```batch
         TubeDown.py  -l  URList.txt
         ```
         
- * Descargar una lista de videos y no descargar los ya existentes:
+ * ___Descargar una lista de videos y no descargar los ya existentes:___
  
-    - Se ejecuta el Script desde consola.
+    - Se ejecuta el _Script_ desde consola.
         
         ```batch
         TubeDown.py  -l  URList.txt  -nr
