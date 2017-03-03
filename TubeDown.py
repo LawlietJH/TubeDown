@@ -87,29 +87,33 @@ xD = True
 Ruta = Ruta()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
 
 	
-	
-#~ Dato = input("\n\n\t Descargar una Lista [S/N]: ")
 
-while xD:
+def main():
 	
-	Cont = 0
+	#~ Dato = input("\n\n\t Descargar una Lista [S/N]: ")
 	
-	try:
+	while xD:
 		
-		Download()			#~ Método para descargar videos.
+		Cont = 0
 		
-	except ValueError:								#~ Por si se escribe algo que no sea una URL
-		print("\n\n\n\t\t No es una URL...")
-		
-	except IndexError:								#~ Por si no se escribe nada.
-		print("\n\n\n\t\t Escribe una URL...")	
-		
-	except Exception as ex:
-		
-		if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
-			print("\n\n\n\t\t URL no válido...")
-		else:
-			print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
+		try:
+			
+			Download()			#~ Método para descargar videos.
+			
+		except ValueError:								#~ Por si se escribe algo que no sea una URL
+			print("\n\n\n\t\t No es una URL...")
+			
+		except IndexError:								#~ Por si no se escribe nada.
+			print("\n\n\n\t\t Escribe una URL...")	
+			
+		except Exception as ex:
+			
+			if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
+				print("\n\n\n\t\t URL no válido...")
+			else:
+				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 	
 
+
+main()
 
