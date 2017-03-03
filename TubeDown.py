@@ -23,15 +23,13 @@ BTD = r"""
        ██║   ██║   ██║██████╔╝█████╗  ██║  ██║██║   ██║██║ █╗ ██║██╔██╗ ██║
        ██║   ██║   ██║██╔══██╗██╔══╝  ██║  ██║██║   ██║██║███╗██║██║╚██╗██║
        ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
-       ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝  
-"""
+       ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝  """
 #~ Fuente: ANSI Shadow, Página: http://patorjk.com/software/taag
 
 BA = r"""
                             ╦  ┌─┐┬ ┬┬  ┬┌─┐┌┬┐╦╦ ╦
                             ║  ├─┤││││  │├┤  │ ║╠═╣
-                            ╩═╝┴ ┴└┴┘┴─┘┴└─┘ ┴╚╝╩ ╩
-"""
+                            ╩═╝┴ ┴└┴┘┴─┘┴└─┘ ┴╚╝╩ ╩"""
 #~ Fuente: Calvin S, Página: http://patorjk.com/software/taag
 
 
@@ -39,7 +37,7 @@ def Dat():
 	
 	Nombre = BTD
 	Autor = BA
-	Ver = "\n\n\n{:^80}".format(Version)
+	Ver = "\n\n{:^80}".format(Version)
 	print(Nombre, "\n\n", Autor, Ver)
 	
 
@@ -111,10 +109,9 @@ def Modo_de_Uso():
 	Uso = """\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext][-nr] | [-v] | [-h] | [URL]
 	\n\n\t -l,  --list \t\t Se coloca el nombre del archivo\n\t\t\t\t para obtener la lista de URLs.
 	\n\t -nr, --norepetir \t Se añade este argumento después\n\t\t\t\t de seleccionar el archivo de URLs.
-	\n\t -v,  --version \t\t Muestra la versión y autor del Script.
-	\n\t -h,  --help \t\t Muestra el Modo De Uso.
-	\n\n https://www.youtube.com/...\t Se añade una URL como argumento después \n\t\t\t\t del nombre del Script.
-	\t\t\t Sólo se descargará ese video.
+	\n\t -v,  --version \t Muestra la versión y autor del Script.
+	\n\n\t -h,  --help \t\t Muestra el Modo De Uso.
+	\n\n https://www.youtube.com/...\t Se añade la URL como argumento y \n\t\t\t\t sólo se descargará ese video.
 	\n\n\n   Ejemplos De Uso:\n\n\t\t   TubeDown.py  -l  xD.zion  -nr
 	\n\n\t\t   TubeDown.py  http://www.youtube.com/video_etc...
 	"""
