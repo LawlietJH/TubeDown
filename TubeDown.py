@@ -388,7 +388,13 @@ class BarraProgreso:
 		sys.stdout.write(bar)
 	
 	def End(self, *args):
-		print("\n\n\n\n\t\t Descargado!")
+			
+		if LR == True:
+			global Conny
+			Conny += 1
+			print("\n\n\n\n\t\t Descargado!\t", Conny, " / ", VidTotal)
+		else:
+			print("\n\n\n\n\t\t Descargado!")
 		
 
 
@@ -502,7 +508,10 @@ def Lista_Reproduccion(Ruta, vid_url):
 		video.download(Ruta, on_progress=bar.Progreso, on_finish=bar.End)
 		
 	except OSError:
+		global Conny
+		Conny += 1
 		print(" [!] Ya existe este Video! Saltando...")
+		print("\n\n\t\t\t\t", Conny," / ", VidTotal)
 		
 	except KeyboardInterrupt:
 		Ctrl_C()
@@ -514,10 +523,12 @@ def Lista_Reproduccion(Ruta, vid_url):
 
 
 def ImprimirURLs(vid_urls):
+	global VidTotal
+	VidTotal = 0
 	for x, url in enumerate(vid_urls):
 		print("\t", x+1, " - ", url)
 		time.sleep(0.04)
-		
+		VidTotal += 1
 
 
 
@@ -528,9 +539,12 @@ def ImprimirURLs(vid_urls):
 
 
 xD = True
+LR = False
 NoRepetir = False
 URLEnArgv = False
 Cont = 0
+Conny = 0
+VidTotal = 0
 Videos = []
 Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
 
@@ -541,6 +555,7 @@ def main():
 	os.system("cls")
 	
 	global Ruta
+	global LR
 	global NoRepetir
 	global URLEnArgv
 	
@@ -581,7 +596,9 @@ def main():
 			
 			playlist_page_content = getPageHtml(URL)
 			vid_urls_in_playlist = getPlaylistVideoUrls(playlist_page_content, URL)
-
+			
+			LR = True
+			
 			# Descarga los Videos de La Lista de Reproducción.
 			for Video_URL in vid_urls_in_playlist:
 				Lista_Reproduccion(Ruta, Video_URL)
@@ -610,6 +627,8 @@ def main():
 			
 			playlist_page_content = getPageHtml(URL)
 			vid_urls_in_playlist = getPlaylistVideoUrls(playlist_page_content, URL)
+			
+			LR = True
 			
 			# Descarga los Videos de La Lista de Reproducción.
 			for Video_URL in vid_urls_in_playlist:
