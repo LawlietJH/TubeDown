@@ -112,14 +112,17 @@ def Modo_de_Uso():
 	
 	Dat()
 	
-	Uso = """\n   Modo De Uso:\n\n\t\t TubeDown.py [-l URList.ext][-nr] | [-v] | [-h] | [URL]
+	Uso = """\n   Modo De Uso:\n\n TubeDown.py [-l URList.ext][-nr] | [-v|-h] | [URL] | [-lr URListaRep][Ruta]
 	\n\n\t -l,  --list \t\t Se coloca el nombre del archivo\n\t\t\t\t para obtener la lista de URLs.
 	\n\t -nr, --norepetir \t Se añade este argumento después\n\t\t\t\t de seleccionar el archivo de URLs.
+	\n\t -lr, --listrep \t Se añade este argumento y después se escribe \n\t\t\t\t la URL de la lista de Reproducción de Youtube.
+	\t\t\t Se le puede añadir ruta de Descargar.
 	\n\t -v,  --version \t Muestra la versión y autor del Script.
 	\n\n\t -h,  --help \t\t Muestra el Modo De Uso.
 	\n\n https://www.youtube.com/...\t Se añade la URL como argumento y \n\t\t\t\t sólo se descargará ese video.
-	\n\n\n   Ejemplos De Uso:\n\n\t\t   TubeDown.py  -l  xD.zion  -nr
-	\n\n\t\t   TubeDown.py  http://www.youtube.com/video_etc...
+	\n\n\n   Ejemplos De Uso:\n\n\t   TubeDown.py  -l  xD.zion  -nr
+	\n\n\t   TubeDown.py  http://www.youtube.com/video_etc...
+	\n\n\t   TubeDown.py  -lr http://www.youtube.com/Lista_De_Reproducción...
 	"""
 	
 	print(Uso)
