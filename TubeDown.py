@@ -50,6 +50,7 @@ def Dat():
 def Salir(Num=0):
 	
 	HiddenCursor("Show")
+	os.system("cls")
 	exit(Num)
 
 #~ Función Que Permite Esconder El Cursor de la Pantalla (La rayita que parpadea xD).
@@ -223,7 +224,7 @@ def Chk_URL():
 
 def Chk_URL_Lista():
 	
-	for URL in Videos:
+	for URL in VideosList:
 		
 		global Cont
 		Cont = 0
@@ -241,6 +242,9 @@ def Chk_URL_Lista():
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
 			Salir(0)
+		
+		#~ except NameError:
+			#~ Salir(0)
 			
 		except Exception as ex:
 			
@@ -262,13 +266,15 @@ def Ctrl_C():
 
 def Open_txt(X):
 	
-	global Videos
+	global VideosList
+	global VidTotal
 	
 	Archivo = open(X,"r")	#~ Se abre el archivo.
 	
 	for linea in Archivo:
-		Videos.append(linea)	#~ Se añade cada URL del archivo a la lista .
-	
+		VideosList.append(linea)	#~ Se añade cada URL del archivo a la lista .
+		VidTotal += 1
+		
 	Archivo.close()
 
 
@@ -316,6 +322,7 @@ def Download():
 
 def Download_Lista(URLVid):
 		
+	global Conny
 	global Cont
 	
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
@@ -326,7 +333,7 @@ def Download_Lista(URLVid):
 	while xD:
 		
 		try:
-			system("cls")
+			os.system("cls")
 			print("\n\n\n [+] Video: ", Video.filename, "\n\n")		#~ Se imprime el nombre del video.
 			bar = BarraProgreso()
 			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
@@ -335,8 +342,10 @@ def Download_Lista(URLVid):
 			
 		except OSError:
 			if NoRepetir == True:
-				print("\n\n\t\t [!] Video Repetido...")		#~ Usando 'TubeDown.py -l URList.ext -nr' (.ext significa extensión)
-				time.sleep(1)								#~ Mostrara esto si el video esta repetido y no lo descargará.
+				Conny += 1
+				print("\n\n\t\t [!] Video Repetido...")			#~ Usando 'TubeDown.py -l URList.ext -nr' (.ext significa extensión)
+				print("\n\n\t\t\t", Conny," / ", VidTotal)	#~ Mostrara esto si el video esta repetido y no lo descargará.
+				time.sleep(1)
 				break
 			else:
 				Cont += 1
@@ -545,7 +554,7 @@ URLEnArgv = False
 Cont = 0
 Conny = 0
 VidTotal = 0
-Videos = []
+VideosList = []
 Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
 
 
@@ -568,6 +577,7 @@ def main():
 			
 			if sys.argv[3] == "-nr" or sys.argv[3] == "--norepetir":
 				
+				LR = True
 				NoRepetir = True
 				Chk_txt(Dato)
 				Open_txt(Dato)
@@ -611,6 +621,7 @@ def main():
 		if sys.argv[1] == "-l" or sys.argv[1] == "--list":
 			Dato = sys.argv[2]
 			
+			LR = True
 			Chk_txt(Dato)
 			Open_txt(Dato)
 			
