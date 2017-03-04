@@ -15,11 +15,11 @@
                             ╩═╝┴ ┴└┴┘┴─┘┴└─┘ ┴╚╝╩ ╩
 
 
-                                     v1.2.5
+                                     v1.2.6
 
 ### Modo De Uso:
 
-       TubeDown.py [-l URList.ext][-nr] | [-v|-h] | [URL] | [-lr URListaRep][Ruta]
+       TubeDown.py [-l URList.ext][-nr] | [-v] | [-h] | [URL] | [-lr URListaRep][Ruta]
 
 
          -l,  --list               Se coloca el nombre del archivo
@@ -34,9 +34,7 @@
 
          -v,  --version            Muestra la versión y autor del Script.
 
-
          -h,  --help               Muestra el Modo De Uso.
-
 
      https://www.youtube.com/...   Se añade la URL como argumento y
                                    sólo se descargará ese video.
@@ -120,7 +118,7 @@ Ejemplo 1 - Lista de URLs:          TubeDown.py  -l  xD.zion  -nr
                       
 Ejemplo 2 - De a uno solo:          TubeDown.py  https://www.youtube.com/video_etc...
 
-Ejemplo 3 - Lista de reproduccion de Youtube:
+Ejemplo 3 - Lista de Reproducción de Youtube:
 
             TubeDown.py  -lr  http://www.youtube.com/Lista_De_Reproducción  CarpetaDescargas
 ```
