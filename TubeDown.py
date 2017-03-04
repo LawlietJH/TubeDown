@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.2.5
+#																v1.2.6
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.2.5"
+Version = "v1.2.6"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -46,6 +46,11 @@ def Dat():
 	Ver = "\n\n{:^80}".format(Version)
 	print(Nombre, "\n\n", Autor, Ver)
 	
+
+def Salir(Num=0):
+	
+	HiddenCursor("Show")
+	exit(Num)
 
 #~ Función Que Permite Esconder El Cursor de la Pantalla (La rayita que parpadea xD).
 def HiddenCursor(imp="Hide"):
@@ -112,7 +117,7 @@ def Modo_de_Uso():
 	
 	Dat()
 	
-	Uso = """\n   Modo De Uso:\n\n TubeDown.py [-l URList.ext][-nr] | [-v|-h] | [URL] | [-lr URListaRep][Ruta]
+	Uso = """   Modo De Uso:\n\n TubeDown.py [-l URList.ext][-nr] | [-v|-h] | [URL] | [-lr URListaRep][Ruta]
 	\n\n\t -l,  --list \t\t Se coloca el nombre del archivo\n\t\t\t\t para obtener la lista de URLs.
 	\n\t -nr, --norepetir \t Se añade este argumento después\n\t\t\t\t de seleccionar el archivo de URLs.
 	\n\t -lr, --listrep \t Se añade este argumento y después se escribe \n\t\t\t\t la URL de la lista de Reproducción de Youtube.
@@ -120,9 +125,9 @@ def Modo_de_Uso():
 	\n\t -v,  --version \t Muestra la versión y autor del Script.
 	\n\n\t -h,  --help \t\t Muestra el Modo De Uso.
 	\n\n https://www.youtube.com/...\t Se añade la URL como argumento y \n\t\t\t\t sólo se descargará ese video.
-	\n\n\n   Ejemplos De Uso:\n\n\t   TubeDown.py  -l  xD.zion  -nr
-	\n\n\t   TubeDown.py  http://www.youtube.com/video_etc...
-	\n\n\t   TubeDown.py  -lr http://www.youtube.com/Lista_De_Reproducción...
+	\n\n   Ejemplos De Uso:\n\n\t   TubeDown.py  -l  xD.zion  -nr
+	\n\t   TubeDown.py  http://www.youtube.com/video_etc...
+	\n\t   TubeDown.py  -lr http://www.youtube.com/Lista_De_Reproducción...
 	"""
 	
 	print(Uso)
@@ -161,7 +166,7 @@ def Chk_txt(x):
 	if not os.path.exists(x):
 		print("\n\n\t\t [!] No Existe El Archivo: "+x)
 		os.system('Timeout /nobreak 03 > Nul')
-		exit(0)
+		Salir(0)
 	else:
 		return True
 	
@@ -185,7 +190,7 @@ def Chk_URL():
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
-			exit(0)
+			Salir(0)
 			
 		except Exception as ex:
 			
@@ -198,9 +203,9 @@ def Chk_URL():
 				
 				if resp == "S" or resp == "s" or resp == "Si" or resp == "si" or resp == "SI" or resp == "sI":
 					Modo_de_Uso()
-					exit(0)
+					Salir(0)
 				else:
-					exit(0)
+					Salir(0)
 			else:
 				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 
@@ -224,7 +229,7 @@ def Chk_URL_Lista():
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
-			exit(0)
+			Salir(0)
 			
 		except Exception as ex:
 			
@@ -279,7 +284,7 @@ def Download():
 			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
 			
 			if URLEnArgv == True:			#~ Si se paso la URL en los argumentos se descargará solo ese video.
-				exit(0)
+				Salir(0)
 			
 			break
 			
@@ -327,7 +332,7 @@ def Download_Lista(URLVid):
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
-			exit(0)
+			Salir(0)
 		
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
@@ -419,8 +424,11 @@ def getPageHtml(url):
 		yTUBE = urllib.request.urlopen(url).read()
 		return str(yTUBE)
 	except urllib.error.URLError as e:
-		print(e.reason)
-		exit(1)
+
+		print("\n\n\t [!] URL No Valida.")
+		time.sleep(3)
+		Modo_de_Uso()
+		Salir(1)
 
 
 def getPlaylistUrlID(url):
@@ -433,7 +441,7 @@ def getPlaylistUrlID(url):
 		return pl_id
 	else:
 		print(url, "\n\n [!] No es una Lista de Reproducción de Youtube.")
-		exit(1)
+		Salir(1)
 
 
 def getFinalVideoUrl(vid_urls):
@@ -459,7 +467,7 @@ def getPlaylistVideoUrls(page_content, url):
 		return final_vid_urls
 	else:
 		print('\n\n [!] Ningun Video Encontrado.')
-		exit(1)
+		Salir(1)
 
 
 
@@ -485,7 +493,7 @@ def Lista_Reproduccion(Ruta, vid_url):
 		
 	except KeyboardInterrupt:
 		Ctrl_C()
-		exit(0)
+		Salir(0)
 	
 	except Exception as ex:
 		print("\n\n\t\t", type(ex).__name__)
@@ -538,7 +546,7 @@ def main():
 				
 				Chk_URL_Lista()
 				
-				exit(0)
+				Salir(0)
 		
 		#~ Descarga una lista de Reproducción de Yotube en la Ruta especificada.
 		elif sys.argv[1] == "-lr" or sys.argv[1] == "--listrep":
@@ -553,7 +561,7 @@ def main():
 				os.makedirs(Ruta, exist_ok=True)
 			except OSError as e:
 				print(e.reason)
-				exit(1)
+				Salir(1)
 			
 			if not URL.startswith("https://"):
 				URL = 'https://' + URL
@@ -566,6 +574,7 @@ def main():
 				download_Video(Ruta, Video_URL)
 				time.sleep(1)
 		
+		else:	Modo_de_Uso()
 		
 	elif len(sys.argv) == 3:
 		
@@ -577,7 +586,7 @@ def main():
 			
 			Chk_URL_Lista()
 			
-			exit(0)
+			Salir(0)
 		
 		#~ Descarga una lista de Reproducción de Yotube
 		elif sys.argv[1] == "-lr" or sys.argv[1] == "--listrep":
@@ -593,6 +602,8 @@ def main():
 			for Video_URL in vid_urls_in_playlist:
 				download_Video(Ruta, Video_URL)
 				time.sleep(1)
+			
+		else:	Modo_de_Uso()
 		
 	elif len(sys.argv) == 2:
 		
@@ -603,16 +614,16 @@ def main():
 		elif "https://www.youtube.com/" in sys.argv[1]:
 			URLEnArgv = True
 			Chk_URL()
-		else: 
-			Modo_de_Uso()
+		
+		else:	Modo_de_Uso()
 	
 	elif len(sys.argv) == 1:
 		Chk_URL()
 	
-	else:
-		Modo_de_Uso()
+	else:	Modo_de_Uso()
 		
 
 
 main()
+
 HiddenCursor("Show")
