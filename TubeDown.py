@@ -126,8 +126,8 @@ def Modo_de_Uso():
 	\n\n\t -h,  --help \t\t Muestra el Modo De Uso.
 	\n\n https://www.youtube.com/...\t Se añade la URL como argumento y \n\t\t\t\t sólo se descargará ese video.
 	\n\n   Ejemplos De Uso:\n\n\t   TubeDown.py  -l  xD.zion  -nr
-	\n\t   TubeDown.py  http://www.youtube.com/video_etc...
-	\n\t   TubeDown.py  -lr http://www.youtube.com/Lista_De_Reproducción...
+	\n\t   TubeDown.py  https://www.youtube.com/video_etc...
+	\n\t   TubeDown.py  -lr https://www.youtube.com/Lista_De_Reproducción...
 	"""
 	
 	print(Uso)
@@ -192,11 +192,22 @@ def Chk_URL():
 			Ctrl_C()
 			Salir(0)
 			
+		except AttributeError:
+			print("\n\n\n\t\t [!] El URL no es válido...\n\n")
+			Salir(0)
+			
 		except Exception as ex:
 			
-			if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
-				print("\n\n\n\t\t [!] El URL no es válido... o Quizá No Hay Conexión...")
-			elif type(ex).__name__ == "AgeRestricted":
+			if type(ex).__name__ == "HTTPError":			#~ Si el tipo de error es HTTPError imprimirá algo en pantalla.
+				print("\n\n\n\t\t [!] El URL no es válido...\n\n")
+				Salir(0)
+				
+			elif type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
+				print("\n\n\n\t\t [!] El URL no es válido... o Quizá No Hay Conexión...\n\n")
+				
+				if URLEnArgv == True: Salir(0)
+				
+			elif type(ex).__name__ == "AgeRestricted":		#~ Si el tipo de error es AgeRestricted imprimirá algo en pantalla.
 				print("\n\n\n\t [!] Restricción de Edad.")
 				
 				resp = input("\n\n\n\t [¡] Quizá la URL es una Lista de Reproducción de Youtube [S/N]: ")
@@ -259,6 +270,7 @@ def Open_txt(X):
 		Videos.append(linea)	#~ Se añade cada URL del archivo a la lista .
 	
 	Archivo.close()
+
 
 def Download():
 	
@@ -388,6 +400,7 @@ def Tiempo(sec):
 	else:            # Sin Conversión
 		return '{0:d} segundo(s)'.format(int(sec))
 
+
 def Bytes_Cadena(bts):
 	bts = float(bts)
 	if bts >= 1024 ** 4:    # Convierte a Terabytes
@@ -463,7 +476,7 @@ def getPlaylistVideoUrls(page_content, url):
 	if vid_url_matches:
 		final_vid_urls = getFinalVideoUrl(vid_url_matches)
 		print("\n\n [*] Encontrados", len(final_vid_urls), "Videos en la Lista De Reproducción\n\n")
-		printUrls(final_vid_urls)
+		ImprimirURLs(final_vid_urls)
 		return final_vid_urls
 	else:
 		print('\n\n [!] Ningun Video Encontrado.')
@@ -571,7 +584,7 @@ def main():
 
 			# Descarga los Videos de La Lista de Reproducción.
 			for Video_URL in vid_urls_in_playlist:
-				download_Video(Ruta, Video_URL)
+				Lista_Reproduccion(Ruta, Video_URL)
 				time.sleep(1)
 		
 		else:	Modo_de_Uso()
@@ -600,7 +613,7 @@ def main():
 			
 			# Descarga los Videos de La Lista de Reproducción.
 			for Video_URL in vid_urls_in_playlist:
-				download_Video(Ruta, Video_URL)
+				Lista_Reproduccion(Ruta, Video_URL)
 				time.sleep(1)
 			
 		else:	Modo_de_Uso()
