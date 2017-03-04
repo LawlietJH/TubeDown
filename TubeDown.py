@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.2.3
+#																v1.2.4
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.2.3"
+Version = "v1.2.4"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -460,6 +460,8 @@ def getPlaylistVideoUrls(page_content, url):
 
 
 
+#function added to get audio files along with the video files from the playlist
+
 def Lista_Reproduccion(Ruta, vid_url):
 	try:
 		yt = YouTube(vid_url)
@@ -535,6 +537,33 @@ def main():
 				
 				exit(0)
 		
+		#~ Descarga una lista de Reproducción de Yotube en la Ruta especificada.
+		elif sys.argv[1] == "-lr" or sys.argv[1] == "--listrep":
+			URL = sys.argv[2]
+			
+			Ruta = Ruta_txt()
+			
+			Ruta = sys.argv[3]
+		
+			# Crea el directorio si el especificado no existemake directory if dir specified doesn't exist
+			try:
+				os.makedirs(Ruta, exist_ok=True)
+			except OSError as e:
+				print(e.reason)
+				exit(1)
+			
+			if not URL.startswith("https://"):
+				URL = 'https://' + URL
+			
+			playlist_page_content = getPageHtml(URL)
+			vid_urls_in_playlist = getPlaylistVideoUrls(playlist_page_content, URL)
+
+			# Descarga los Videos de La Lista de Reproducción.
+			for Video_URL in vid_urls_in_playlist:
+				download_Video(Ruta, Video_URL)
+				time.sleep(1)
+		
+		
 	elif len(sys.argv) == 3:
 		
 		if sys.argv[1] == "-l" or sys.argv[1] == "--list":
@@ -546,6 +575,8 @@ def main():
 			Chk_URL_Lista()
 			
 			exit(0)
+		
+		
 		
 	elif len(sys.argv) == 2:
 		
