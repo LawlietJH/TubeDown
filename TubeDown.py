@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.2.2
+#																v1.2.3
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.2.2"
+Version = "v1.2.3"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -458,6 +458,33 @@ def getPlaylistVideoUrls(page_content, url):
 		print('\n\n [!] Ningun Video Encontrado.')
 		exit(1)
 
+
+
+def Lista_Reproduccion(Ruta, vid_url):
+	try:
+		yt = YouTube(vid_url)
+	except Exception as ex:
+		print("\n\n\n\t Error:", str(ex), "- Saltandose Video con la URL '"+vid_url+"'.")
+		print("\n\n\t Video:", yt.filename)
+		return
+
+	video = yt.filter('mp4')[-1]
+	
+	print("\n\n [+] Video:", yt.filename, "\n\n")
+	try:
+		bar = BarraProgreso()
+		video.download(Ruta, on_progress=bar.Progreso, on_finish=bar.End)
+		
+	except OSError:
+		print("\n\n [!] Ya existe este Video! Saltando...")
+		
+	except KeyboardInterrupt:
+		Ctrl_C()
+		exit(0)
+	
+	except Exception as ex:
+		print("\n\n\t\t", type(ex).__name__)
+		
 
 
 def ImprimirURLs(vid_urls):
