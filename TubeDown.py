@@ -39,6 +39,8 @@ BA = r"""
 
 def Dat():
 	
+	os.system("cls")
+	
 	Nombre = BTD
 	Autor = BA
 	Ver = "\n\n{:^80}".format(Version)
@@ -186,6 +188,16 @@ def Chk_URL():
 			
 			if type(ex).__name__ == "URLError":			#~ Si el tipo de error es URLError imprimirá algo en pantalla.
 				print("\n\n\n\t\t [!] El URL no es válido... o Quizá No Hay Conexión...")
+			elif type(ex).__name__ == "AgeRestricted":
+				print("\n\n\n\t [!] Restricción de Edad.")
+				
+				resp = input("\n\n\n\t [¡] Quizá la URL es una Lista de Reproducción de Youtube [S/N]: ")
+				
+				if resp == "S" or resp == "s" or resp == "Si" or resp == "si" or resp == "SI" or resp == "sI":
+					Modo_de_Uso()
+					exit(0)
+				else:
+					exit(0)
 			else:
 				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 
@@ -221,8 +233,8 @@ def Chk_URL_Lista():
 
 
 def Ctrl_C():
-	print("\n\n\t\t [!] Cancelado...")
 	try:
+		print("\n\n\n\n\t\t [!] Cancelado...")
 		os.system("timeout /nobreak 03 > Nul")
 		return
 	except KeyboardInterrupt:
@@ -258,6 +270,7 @@ def Download():
 	while xD:
 		
 		try:
+			os.system("cls")
 			print("\n\n\n [+] Video: ", Video.filename, "\n\n")		#~ Se imprime el nombre del video.
 			bar = BarraProgreso()
 			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
@@ -273,12 +286,11 @@ def Download():
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
-			exit(0)
 			break
 		
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
-			system("Pause")
+			system("Pause > Nul")
 			
 
 
@@ -294,10 +306,10 @@ def Download_Lista(URLVid):
 	while xD:
 		
 		try:
-			print("\n\n\n [+] Video: ", Video.filename, "\nn")		#~ Se imprime el nombre del video.
+			print("\n\n\n [+] Video: ", Video.filename, "\n\n")		#~ Se imprime el nombre del video.
 			bar = BarraProgreso()
 			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
-			time.sleep(1)
+			os.system("Pause > Nul")
 			break
 			
 		except OSError:
@@ -316,7 +328,7 @@ def Download_Lista(URLVid):
 		
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
-		
+			os.system("Pause > Nul")
 	
 
 
