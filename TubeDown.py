@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.1.7
+#																v1.1.8
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.1.7"
+Version = "v1.1.8"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -306,10 +306,11 @@ def Download_Lista(URLVid):
 	while xD:
 		
 		try:
+			system("cls")
 			print("\n\n\n [+] Video: ", Video.filename, "\n\n")		#~ Se imprime el nombre del video.
 			bar = BarraProgreso()
 			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
-			os.system("Pause > Nul")
+			time.sleep(1)
 			break
 			
 		except OSError:
@@ -324,7 +325,6 @@ def Download_Lista(URLVid):
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
 			exit(0)
-			break
 		
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
@@ -332,6 +332,7 @@ def Download_Lista(URLVid):
 	
 
 
+#~ Datos Para La Barra de Progreso
 #~ =========================================================================================================================
 #~ ======================================== INICIO =========================================================================
 #~ =========================================================================================================================
@@ -399,10 +400,30 @@ def Bytes_Cadena(bts):
 
 
 #~ =========================================================================================================================
-#~ ============================================= FIN =======================================================================
+#~ ========================================= FIN ===========================================================================
 #~ =========================================================================================================================
 
 
+
+#~ Funciones Para descargar Listas de Reproducción De YouTube.
+#~ =========================================================================================================================
+#~ ======================================== INICIO =========================================================================
+#~ =========================================================================================================================
+
+
+def getPageHtml(url):
+	try:
+		yTUBE = urllib.request.urlopen(url).read()
+		return str(yTUBE)
+	except urllib.error.URLError as e:
+		print(e.reason)
+		exit(1)
+
+
+
+#~ =========================================================================================================================
+#~ ========================================= FIN ===========================================================================
+#~ =========================================================================================================================
 
 
 
@@ -413,12 +434,13 @@ Cont = 0
 Videos = []
 Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos deseados.
 
-	
+
 
 def main():
 	
 	os.system("cls")
 	
+	global Ruta
 	global NoRepetir
 	global URLEnArgv
 	
@@ -438,7 +460,7 @@ def main():
 				Chk_URL_Lista()
 				
 				exit(0)
-	
+		
 	elif len(sys.argv) == 3:
 		
 		if sys.argv[1] == "-l" or sys.argv[1] == "--list":
@@ -468,6 +490,8 @@ def main():
 	
 	else:
 		Modo_de_Uso()
+		
+
 
 main()
 HiddenCursor("Show")
