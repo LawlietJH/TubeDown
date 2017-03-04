@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.2.1
+#																v1.2.2
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.2.1"
+Version = "v1.2.2"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -459,6 +459,12 @@ def getPlaylistVideoUrls(page_content, url):
 		exit(1)
 
 
+
+def ImprimirURLs(vid_urls):
+	for x, url in enumerate(vid_urls):
+		print("\t", x+1, " - ", url)
+		time.sleep(0.04)
+		
 
 
 
