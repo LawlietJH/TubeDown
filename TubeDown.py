@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.2.4
+#																v1.2.5
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.2.4"
+Version = "v1.2.5"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -478,7 +478,7 @@ def Lista_Reproduccion(Ruta, vid_url):
 		video.download(Ruta, on_progress=bar.Progreso, on_finish=bar.End)
 		
 	except OSError:
-		print("\n\n [!] Ya existe este Video! Saltando...")
+		print(" [!] Ya existe este Video! Saltando...")
 		
 	except KeyboardInterrupt:
 		Ctrl_C()
@@ -576,7 +576,20 @@ def main():
 			
 			exit(0)
 		
-		
+		#~ Descarga una lista de Reproducción de Yotube
+		elif sys.argv[1] == "-lr" or sys.argv[1] == "--listrep":
+			URL = sys.argv[2]
+			
+			if not URL.startswith("https://"):
+				URL = 'https://' + URL
+			
+			playlist_page_content = getPageHtml(URL)
+			vid_urls_in_playlist = getPlaylistVideoUrls(playlist_page_content, URL)
+			
+			# Descarga los Videos de La Lista de Reproducción.
+			for Video_URL in vid_urls_in_playlist:
+				download_Video(Ruta, Video_URL)
+				time.sleep(1)
 		
 	elif len(sys.argv) == 2:
 		
