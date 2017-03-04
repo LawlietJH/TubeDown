@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.1.8
+#																v1.1.9
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.1.8"
+Version = "v1.1.9"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -417,6 +417,19 @@ def getPageHtml(url):
 		return str(yTUBE)
 	except urllib.error.URLError as e:
 		print(e.reason)
+		exit(1)
+
+
+def getPlaylistUrlID(url):
+	if 'list=' in url:
+		eq_idx = url.index('=') + 1
+		pl_id = url[eq_idx:]
+		if '&' in url:
+			amp = url.index('&')
+			pl_id = url[eq_idx:amp]
+		return pl_id
+	else:
+		print(url, "\n\n [!] No es una Lista de Reproducción de Youtube.")
 		exit(1)
 
 
