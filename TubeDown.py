@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.2.0
+#																v1.2.1
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.2.0"
+Version = "v1.2.1"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -441,6 +441,24 @@ def getFinalVideoUrl(vid_urls):
 			url_amp = vid_url.index('&')
 		final_urls.append('http://www.youtube.com/' + vid_url[:url_amp])
 	return final_urls
+
+
+def getPlaylistVideoUrls(page_content, url):
+	playlist_id = getPlaylistUrlID(url)
+	
+	vid_url_pat = re.compile(r'watch\?v=\S+?list=' + playlist_id)
+	vid_url_matches = list(set(re.findall(vid_url_pat, page_content)))
+	
+	if vid_url_matches:
+		final_vid_urls = getFinalVideoUrl(vid_url_matches)
+		print("\n\n [*] Encontrados", len(final_vid_urls), "Videos en la Lista De Reproducción\n\n")
+		printUrls(final_vid_urls)
+		return final_vid_urls
+	else:
+		print('\n\n [!] Ningun Video Encontrado.')
+		exit(1)
+
+
 
 
 
