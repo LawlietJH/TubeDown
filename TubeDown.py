@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.1.9
+#																v1.2.0
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.1.9"
+Version = "v1.2.0"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -431,6 +431,16 @@ def getPlaylistUrlID(url):
 	else:
 		print(url, "\n\n [!] No es una Lista de Reproducción de Youtube.")
 		exit(1)
+
+
+def getFinalVideoUrl(vid_urls):
+	final_urls = []
+	for vid_url in vid_urls:
+		url_amp = len(vid_url)
+		if '&' in vid_url:
+			url_amp = vid_url.index('&')
+		final_urls.append('http://www.youtube.com/' + vid_url[:url_amp])
+	return final_urls
 
 
 
