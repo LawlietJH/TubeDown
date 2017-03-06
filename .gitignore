@@ -5,11 +5,15 @@ __Descargas__/
 
 *.pyc
 *.pyo
+*.pyw
 
 # Otros documentos propios
 *.zion
 *.txt
 *.mp4
+*.zip
+*.rar
+*.tar.bz2
 
 # -------------------------------------
 
