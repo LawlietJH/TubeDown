@@ -38,9 +38,7 @@ BA = r"""
 
 
 def Dat():
-	
-	os.system("cls")
-	
+		
 	Nombre = BTD
 	Autor = BA
 	Ver = "\n\n{:^80}".format(Version)
@@ -104,7 +102,7 @@ def Chk_Dep():
 		
 	except ModuleNotFoundError:
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
-		os.system("pip install pytube > Nul && cls")
+		os.system("title Instalando PyTube && pip install pytube > Nul && cls")
 		
 	except Exception as ex:
 		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
@@ -132,6 +130,8 @@ def Modo_de_Uso():
 	"""
 	
 	print(Uso)
+	os.system("title TubeDown.py            by: LawlietJH && Pause > Nul")
+	
 
 
 def Ruta_Descargas():
@@ -258,7 +258,7 @@ def Chk_URL_Lista():
 def Ctrl_C():
 	try:
 		print("\n\n\n\n\t\t [!] Cancelado...")
-		os.system("timeout /nobreak 03 > Nul")
+		os.system("title Cancelando... && timeout /nobreak 03 > Nul")
 		return
 	except KeyboardInterrupt:
 		Ctrl_C()
@@ -296,7 +296,7 @@ def Download():
 	while xD:
 		
 		try:
-			os.system("cls")
+			os.system("cls && title Descargando:   " + Nombre)
 			print("\n\n\n [+] Video: ", Video.filename, "\n\n")		#~ Se imprime el nombre del video.
 			bar = BarraProgreso()
 			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
@@ -312,6 +312,9 @@ def Download():
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
+			if URLEnArgv == True:			#~ Si se paso la URL en los argumentos y se cancela cerrará el Script.
+				Salir(0)
+				
 			break
 		
 		except Exception as ex:
@@ -333,7 +336,7 @@ def Download_Lista(URLVid):
 	while xD:
 		
 		try:
-			os.system("cls")
+			os.system("cls && title Descargando:   " + Nombre)
 			print("\n\n\n [+] Video: ", Video.filename, "\n\n")		#~ Se imprime el nombre del video.
 			bar = BarraProgreso()
 			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
@@ -511,6 +514,7 @@ def Lista_Reproduccion(Ruta, vid_url):
 
 	video = yt.filter('mp4')[-1]
 	
+	os.system("title Descargando:   " + yt.filename)
 	print("\n\n [+] Video:", yt.filename, "\n\n")
 	try:
 		bar = BarraProgreso()
@@ -561,7 +565,7 @@ Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos des
 
 def main():
 	
-	os.system("cls")
+	os.system("cls && title TubeDown.py            by: LawlietJH")
 	
 	global Ruta
 	global LR
@@ -597,8 +601,8 @@ def main():
 			# Crea el directorio si el especificado no existemake directory if dir specified doesn't exist
 			try:
 				os.makedirs(Ruta, exist_ok=True)
-			except OSError as e:
-				print(e.reason)
+			except OSError as ex:
+				print(ex.reason)
 				Salir(1)
 			
 			if not URL.startswith("https://"):
@@ -653,7 +657,9 @@ def main():
 		if sys.argv[1] == "-h" or sys.argv[1] == "--help":
 			Modo_de_Uso()
 		elif sys.argv[1] == "-v" or sys.argv[1] =="--version":
+			print("\n\n\n\n\n")
 			Dat()
+			os.system("title TubeDown.py            by: LawlietJH && Pause > Nul")
 		elif "https://www.youtube.com/" in sys.argv[1]:
 			URLEnArgv = True
 			Chk_URL()
