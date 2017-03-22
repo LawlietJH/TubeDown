@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.2.6
+#																v1.2.7
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.2.6"
+Version = "v1.2.7"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -382,16 +382,19 @@ class BarraProgreso:
 		
 		TamTotal = Bytes_Cadena(total)
 		TamActual = Bytes_Cadena(cur)
+		Porcent = int((cur*100) / total)
 		
 		elapsed = int(time.clock() - start) + 1
 		curbar = int(currentper * self.barlength)
-		bar = '\r ' + TamActual			#~ Tamaño Descargado
-		bar += ' / ' + TamTotal			#~ tamaño Total
-		bar += '  [' + '='.join(['' for _ in range(curbar)])  # Imprimir Progreso
-		bar += '>'
-		bar += ' '.join(['' for _ in range(int(self.barlength - curbar))]) + ']  '  # Espacio Restante en Progreso
-		bar += Bytes_Cadena(cur / elapsed) + '/s  '  # Calcula la Velocidad de Descarga por Segundo
-		bar += Tiempo((total - cur) * (elapsed / cur)) + '    '  # Calcula El Tiempo Restante
+		
+		bar = '\r {}%'.format(Porcent)
+		bar += ' |' + '█'.join(['' for _ in range(curbar)])  # Imprimir Progreso
+		#~ bar += '|'
+		bar += ' '.join(['' for _ in range(int(self.barlength - curbar))]) + '|'  # Espacio Restante en Progreso
+		bar += ' [' + TamActual			#~ Tamaño Descargado
+		bar += '/' + TamTotal			#~ tamaño Total
+		bar += '] [' + Bytes_Cadena(cur / elapsed) + '/s] ['  # Calcula la Velocidad de Descarga por Segundo
+		bar += Tiempo((total - cur) * (elapsed / cur)) + ']    '  # Calcula El Tiempo Restante
 		
 		if len(bar) > self.longest:
 			self.longest = len(bar)
@@ -432,9 +435,9 @@ def Bytes_Cadena(bts):
 		size = '{:.2f} Mb'.format(megabytes)
 	elif bts >= 1024:       # Convierte a Kilobytes
 		kilobytes = bts / 1024
-		size = '{:.2f} Kb'.format(kilobytes)
+		size = '{:.0f} Kb'.format(kilobytes)
 	else:                   # Sin Conversión
-		size = '{:.2f} b'.format(bts)
+		size = '{:.0f} b'.format(bts)
 	return size
 
 
