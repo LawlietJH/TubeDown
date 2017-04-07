@@ -12,14 +12,17 @@
 
 import urllib.request
 import urllib.error
-
 import time
 import sys
 import os
 import re
 
+
+
 Autor = "LawlietJH"
 Version = "v1.2.8"
+
+
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -30,11 +33,18 @@ BTD = r"""
        ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝  """
 #~ Fuente: ANSI Shadow, Página: http://patorjk.com/software/taag
 
+
+
 BA = r"""
                             ╦  ┌─┐┬ ┬┬  ┬┌─┐┌┬┐╦╦ ╦
                             ║  ├─┤││││  │├┤  │ ║╠═╣
                             ╩═╝┴ ┴└┴┘┴─┘┴└─┘ ┴╚╝╩ ╩"""
 #~ Fuente: Calvin S, Página: http://patorjk.com/software/taag
+
+
+
+#=======================================================================
+
 
 
 def Dat():
@@ -43,13 +53,34 @@ def Dat():
 	Autor = BA
 	Ver = "\n\n{:^80}".format(Version)
 	print(Nombre, "\n\n", Autor, Ver)
-	
+
+
+
+#=======================================================================
+
+
 
 def Salir(Num=0):
 	
 	HiddenCursor("Show")
 	os.system("cls")
 	exit(Num)
+
+
+
+def Ctrl_C():
+	try:
+		print("\n\n\n\n\t\t [!] Cancelado...")
+		os.system("title Cancelando... && timeout /nobreak 03 > Nul")
+		return
+	except KeyboardInterrupt:
+		Ctrl_C()
+
+
+
+#=======================================================================
+
+
 
 #~ Función Que Permite Esconder El Cursor de la Pantalla (La rayita que parpadea xD).
 def HiddenCursor(imp="Hide"):
@@ -95,6 +126,11 @@ def HiddenCursor(imp="Hide"):
 		pass
 
 
+
+#=======================================================================
+
+
+
 def Chk_Dep():
 	
 	try:
@@ -108,12 +144,31 @@ def Chk_Dep():
 		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
 
 
+
 Chk_Dep()				#~ Se instala el módulo pytube si esta no esta instalada.
-from pytube import *	#~ Se importa la módulo.
+try:
+	from pytube import *	# Se Importa El Módulo.
+except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
+	print("\n\n   No se pudo instalar correctamente el Módulo 'pytube'.")
+	print("\n   Revise Su Conexión o Instale El Módulo Manualmente Desde Consola Con:")
+	print("\n\t 'pip install keyboard'   o   ' pip3 install keyboard'")
+	
+	try:
+		os.system("Pause > Nul")
+	except KeyboardInterrupt: pass
+	
+	Dat()
+	Salir(0)
+
+
+
+#=======================================================================
+
 
 
 def Modo_de_Uso():
 	
+	os.system("cls && title TubeDown.py            by: LawlietJH")
 	Dat()
 	
 	Uso = """   Modo De Uso:\n\n TubeDown.py [-l URList.ext][-nr] | [-v|-h] | [URL] | [-lr URListaRep][Ruta]
@@ -130,8 +185,11 @@ def Modo_de_Uso():
 	"""
 	
 	print(Uso)
-	os.system("title TubeDown.py            by: LawlietJH && Pause > Nul")
-	
+	os.system("Pause > Nul")
+
+
+#=======================================================================
+
 
 
 def Ruta_Descargas():
@@ -146,6 +204,7 @@ def Ruta_Descargas():
 	Ruta = os.getcwd()							#~ Guardamos La Ruta.
 	
 	return Ruta
+
 
 
 def Ruta_txt():
@@ -171,6 +230,7 @@ def Chk_txt(x):
 	else:
 		return True
 	
+
 
 def Chk_URL():
 	
@@ -222,6 +282,7 @@ def Chk_URL():
 				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 
 
+
 def Chk_URL_Lista():
 	
 	for URL in VideosList:
@@ -252,16 +313,11 @@ def Chk_URL_Lista():
 				print("\n\n\n\t\t [!] El URL no es válido... o Quizá No Hay Conexión...")
 			else:
 				print("\n\n\n\t\t",type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
-				
 
 
-def Ctrl_C():
-	try:
-		print("\n\n\n\n\t\t [!] Cancelado...")
-		os.system("title Cancelando... && timeout /nobreak 03 > Nul")
-		return
-	except KeyboardInterrupt:
-		Ctrl_C()
+
+#=======================================================================
+
 
 
 def Open_txt(X):
@@ -276,6 +332,7 @@ def Open_txt(X):
 		VidTotal += 1
 		
 	Archivo.close()
+
 
 
 def Download():
@@ -312,7 +369,7 @@ def Download():
 			
 			pass
 				
-		else:	print("\n\n\t [!] Error, URL no valida."), Salir(0)
+		else:	print("\n\n\t [!] Error, URL no valida.")
 	
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
 	VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
@@ -396,6 +453,7 @@ def Download_Lista(URLVid):
 #~ =========================================================================================================================
 
 
+
 class BarraProgreso:
 	
 	def __init__(self, barlength=20):
@@ -448,6 +506,7 @@ def Tiempo(sec):
 		return '{0:d} segundo(s)'.format(int(sec))
 
 
+
 def Bytes_Cadena(bts):
 	bts = float(bts)
 	if bts >= 1024 ** 4:    # Convierte a Terabytes
@@ -467,6 +526,7 @@ def Bytes_Cadena(bts):
 	return size
 
 
+
 #~ =========================================================================================================================
 #~ ========================================= FIN ===========================================================================
 #~ =========================================================================================================================
@@ -479,6 +539,7 @@ def Bytes_Cadena(bts):
 #~ =========================================================================================================================
 
 
+
 def getPageHtml(url):
 	try:
 		yTUBE = urllib.request.urlopen(url).read()
@@ -489,6 +550,7 @@ def getPageHtml(url):
 		time.sleep(3)
 		Modo_de_Uso()
 		Salir(1)
+
 
 
 def getPlaylistUrlID(url):
@@ -504,6 +566,7 @@ def getPlaylistUrlID(url):
 		Salir(1)
 
 
+
 def getFinalVideoUrl(vid_urls):
 	final_urls = []
 	for vid_url in vid_urls:
@@ -512,6 +575,7 @@ def getFinalVideoUrl(vid_urls):
 			url_amp = vid_url.index('&')
 		final_urls.append('http://www.youtube.com/' + vid_url[:url_amp])
 	return final_urls
+
 
 
 def getPlaylistVideoUrls(page_content, url):
@@ -532,7 +596,6 @@ def getPlaylistVideoUrls(page_content, url):
 
 
 #function added to get audio files along with the video files from the playlist
-
 def Lista_Reproduccion(Ruta, vid_url):
 	try:
 		yt = YouTube(vid_url)
