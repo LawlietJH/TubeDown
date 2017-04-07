@@ -8,7 +8,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.2.7
+#																v1.2.8
 
 import urllib.request
 import urllib.error
@@ -19,7 +19,7 @@ import os
 import re
 
 Autor = "LawlietJH"
-Version = "v1.2.7"
+Version = "v1.2.8"
 
 BTD = r"""
     ████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -286,11 +286,37 @@ def Download():
 		URLVid = sys.argv[1]
 	else:
 		URLVid = input("\n\n\n\t [+] URL: ")		#~ Escribimos la URL del Video a Descargar.	
-	
+		
+		if URLVid.startswith("-lr") or URLVid.startswith("-lr"):
+			
+			print("\n\n\t Lista De Reproducción.")
+			
+			#~ Descarga una lista de Reproducción de Yotube
+			URL = URLVid.split(" ")
+			URL = URL[1]
+				
+			if not URL.startswith("https://"):
+				URL = 'https://' + URL
+				
+			playlist_page_content = getPageHtml(URL)
+			vid_urls_in_playlist = getPlaylistVideoUrls(playlist_page_content, URL)
+			
+			LR = True
+			
+			# Descarga los Videos de La Lista de Reproducción.
+			for Video_URL in vid_urls_in_playlist:
+				Lista_Reproduccion(Ruta, Video_URL)
+				time.sleep(1)
+		
+		elif URLVid.startswith("https://"):
+			
+			pass
+				
+		else:	print("\n\n\t [!] Error, URL no valida."), Salir(0)
 	
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
-	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
-	VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
+	VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
+	#~ VideoHD = Video.filter('mp4')[-1]		#~ Obtenemos el video mp4 de mejor calidad posible.
 	Nomb = Nombre = VideoHD.filename
 	
 	while xD:
@@ -329,8 +355,8 @@ def Download_Lista(URLVid):
 	global Cont
 	
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
-	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
-	VideoHD = Video.filter('mp4')[-1]			#~ Obtenemos el video mp4 de mejor calidad posible.
+	VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
+	#~ VideoHD = Video.filter('mp4')[-1]		#~ Obtenemos el video mp4 de mejor calidad posible.
 	Nomb = Nombre = VideoHD.filename
 	
 	while xD:
@@ -363,7 +389,7 @@ def Download_Lista(URLVid):
 			os.system("Pause > Nul")
 	
 
-
+     
 #~ Datos Para La Barra de Progreso
 #~ =========================================================================================================================
 #~ ======================================== INICIO =========================================================================
@@ -514,8 +540,9 @@ def Lista_Reproduccion(Ruta, vid_url):
 		print("\n\n\n\t Error:", str(ex), "- Saltandose Video con la URL '"+vid_url+"'.")
 		print("\n\n\t Video:", yt.filename)
 		return
-
-	video = yt.filter('mp4')[-1]
+	
+	video = yt.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
+	#~ video = yt.filter('mp4')[-1]
 	
 	os.system("title Descargando:   " + yt.filename)
 	print("\n\n [+] Video:", yt.filename, "\n\n")
