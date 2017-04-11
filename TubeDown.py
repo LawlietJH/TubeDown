@@ -53,6 +53,11 @@ def Dat():
 	Autor = BA
 	Ver = "\n\n{:^80}".format(Version)
 	print(Nombre, "\n\n", Autor, Ver)
+	
+	try:
+		time.sleep(3)
+	except KeyboardInterrupt:
+		Dat()
 
 
 
@@ -151,7 +156,7 @@ try:
 except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
 	print("\n\n   No se pudo instalar correctamente el Módulo 'pytube'.")
 	print("\n   Revise Su Conexión o Instale El Módulo Manualmente Desde Consola Con:")
-	print("\n\t 'pip install keyboard'   o   ' pip3 install keyboard'")
+	print("\n\t 'pip install pytube'   o   ' pip3 install pytube'")
 	
 	try:
 		os.system("Pause > Nul")
@@ -372,8 +377,8 @@ def Download():
 		else:	print("\n\n\t [!] Error, URL no valida.")
 	
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
-	VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
-	#~ VideoHD = Video.filter('mp4')[-1]		#~ Obtenemos el video mp4 de mejor calidad posible.
+	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
+	VideoHD = Video.filter('mp4')[-1]		#~ Obtenemos el video mp4 de mejor calidad posible.
 	Nomb = Nombre = VideoHD.filename
 	
 	while xD:
@@ -412,8 +417,8 @@ def Download_Lista(URLVid):
 	global Cont
 	
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
-	VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
-	#~ VideoHD = Video.filter('mp4')[-1]		#~ Obtenemos el video mp4 de mejor calidad posible.
+	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
+	VideoHD = Video.filter('mp4')[-1]		#~ Obtenemos el video mp4 de mejor calidad posible.
 	Nomb = Nombre = VideoHD.filename
 	
 	while xD:
@@ -604,8 +609,8 @@ def Lista_Reproduccion(Ruta, vid_url):
 		print("\n\n\t Video:", yt.filename)
 		return
 	
-	video = yt.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
-	#~ video = yt.filter('mp4')[-1]
+	#~ video = yt.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
+	video = yt.filter('mp4')[-1]
 	
 	os.system("title Descargando:   " + yt.filename)
 	print("\n\n [+] Video:", yt.filename, "\n\n")
