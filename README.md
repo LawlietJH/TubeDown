@@ -5,29 +5,9 @@
 
 ![Banner](Capturas/Banners.png "Banners")
 
-- - -
+## Modo De Uso:
 
-### Modo De Uso:
-
-       TubeDown.py [-l URList.ext][-nr] | [-v] | [-h] | [URL] | [-lr URListaRep][Ruta]
-
-
-         -l,  --list               Se coloca el nombre del archivo
-                                   para obtener la lista de URLs.
-
-         -nr, --norepetir          Se añade este argumento después
-                                   de seleccionar el archivo de URLs.
-
-         -lr, --listrep            Se añade este argumento y después se escribe
-                                   la URL de la lista de Reproducción de Youtube.
-                                   Se le puede añadir ruta de Descargar.
-
-         -v,  --version            Muestra la versión y autor del Script.
-
-         -h,  --help               Muestra el Modo De Uso.
-
-     https://www.youtube.com/...   Se añade la URL como argumento y
-                                   sólo se descargará ese video.
+![Modo_de_Uso](Capturas/Modo_de_Uso.png "Modo de Uso")
 
 - - -
 
