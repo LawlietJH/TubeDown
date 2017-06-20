@@ -9,7 +9,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.2.9
+#																v1.3.0
 
 import urllib.request
 import urllib.error
@@ -21,7 +21,7 @@ import re
 
 
 Autor = "LawlietJH"
-Version = "v1.2.9"
+Version = "v1.3.0"
 
 
 
@@ -48,17 +48,19 @@ BA = r"""
 
 
 
-def Dat():
+def Dat(Quiet=False):
 		
 	Nombre = BTD
 	Autor = BA
 	Ver = "\n\n{:^80}".format(Version)
 	print(Nombre, "\n\n", Autor, Ver)
 	
-	try:
-		Sleep(3)
-	except KeyboardInterrupt:
-		Dat()
+	if Quiet: pass
+	else:
+		try:
+			Sleep(3)
+		except KeyboardInterrupt:
+			Dat()
 
 
 
@@ -198,11 +200,11 @@ except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
 def Modo_de_Uso():
 	
 	os.system("cls && title TubeDown.py            by: LawlietJH")
-	Dat()
+	Dat(True)
 	
 	Uso = """   Modo De Uso:\n\n TubeDown.py [-l URList.ext][-nr] | [-v|-h] | [URL] | [-lr URListaRep][Ruta]
 	\n\n\t -l,  --list \t\t Se coloca el nombre del archivo\n\t\t\t\t para obtener la lista de URLs.
-	\n\t -nr, --norepetir \t Se añade este argumento después\n\t\t\t\t de seleccionar el archivo de URLs.
+	\n\t -nr, --norepetir \t Se añade este argumento después\n\t\t\t\t de seleccionar el archivo de URLs.\n\t\t\t\t Evita Repetir Videos.
 	\n\t -lr, --listrep \t Se añade este argumento y después se escribe \n\t\t\t\t la URL de la lista de Reproducción de Youtube.
 	\t\t\t Se le puede añadir ruta de Descargar.
 	\n\t -v,  --version \t Muestra la versión y autor del Script.
@@ -218,6 +220,14 @@ def Modo_de_Uso():
 
 
 #=======================================================================
+
+
+
+def Chk_Nomb(Nombre):
+	
+	Nombre = Nombre.replace("|", "-")
+	
+	return Nombre
 
 
 
@@ -364,6 +374,10 @@ def Open_txt(X):
 
 
 
+#=======================================================================
+
+
+
 def Download():
 	
 	global Cont
@@ -394,16 +408,64 @@ def Download():
 				Lista_Reproduccion(Ruta, Video_URL)
 				time.sleep(1)
 		
-		elif URLVid.startswith("https://"):
-			
-			pass
-				
-		else:	print("\n\n\t [!] Error, URL no valida.")
+		elif URLVid.startswith("https://"): pass
+		else: print("\n\n\t [!] Error, URL no valida.")
 	
 	Video = YouTube(URLVid)					#~ Se Obtienen Todas Las Calidades Posibles De Ese Video.
 	#~ VideoHD = Video.get('mp4', '720p')		#~ Obtenemos el video mp4 de 720p.
-	VideoHD = Video.filter('mp4')[-1]		#~ Obtenemos el video mp4 de mejor calidad posible.
-	Nomb = Nombre = VideoHD.filename
+	#~ VideoHD = Video.filter('mp4')[-1]		#~ Obtenemos el video mp4 de mejor calidad posible.
+	
+	#=======================================================================
+	
+	while True:
+		
+		Clear()
+				
+		Conty = 0
+		Dic = {}
+		
+		print("\n\n\t  [+] Elige Una Opción:\n")
+		
+		for _ in Video.get_videos():		# Permite Elegir el Formato y La Caidad Deseada de los videos.
+			Conty += 1
+			x = str(_)
+			Formato = x.split(": ")[1].split(" - ")[0]
+			Calidad = x.split(" - ")[1]
+			
+			Cadena = Formato + " - " + Calidad
+			Dic[Conty] = Cadena
+			
+			print("\t [", Conty, "] ", Cadena)
+		
+		try:
+			Ops = int(input("\n\t >>> "))
+		
+			if Ops < 1 or Ops > Conty:
+				
+				print("\n\n\t [!] Elige una Opción Valida!")
+				Sleep()
+				continue
+			
+			Dato = Dic[int(Ops)]
+		
+			Formato = Dato.split("(.")[1].split(")")[0]
+			Calidad = Dato.split(" - ")[1]
+			VideoHD = Video.get(Formato, Calidad)
+			Nomb = Nombre = VideoHD.filename
+			
+			break
+		
+		except ValueError:
+			
+			print("\n\n\t [!] Elige un Número!")
+			Sleep()
+			
+		except Exception as ex:
+			print(type(ex).__name__)
+			Dat()
+			Salir()
+	
+	#=======================================================================
 	
 	while xD:
 		
@@ -434,6 +496,10 @@ def Download():
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
 			system("Pause > Nul")
 			
+
+
+#=======================================================================
+
 
 
 def Download_Lista(URLVid):
