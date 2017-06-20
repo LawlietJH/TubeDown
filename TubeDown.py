@@ -9,10 +9,11 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.3.0
+#																v1.3.1
 
 import urllib.request
 import urllib.error
+import msvcrt
 import time
 import sys
 import os
@@ -21,7 +22,7 @@ import re
 
 
 Autor = "LawlietJH"
-Version = "v1.3.0"
+Version = "v1.3.1"
 
 
 
@@ -68,9 +69,38 @@ def Dat(Quiet=False):
 
 
 
+def PressON(Cadena=""):
+	
+	Imp()
+	
+	print(Cadena, end="")
+	Resp = msvcrt.getch()
+	print(Resp)
+	
+	return Resp
+
+
+
+def Imp():	# Limpia El Buffer (Flush)
+    
+    try:
+        
+        import msvcrt
+        
+        while msvcrt.kbhit(): msvcrt.getch()
+            
+    except ImportError:
+		
+        import sys, termios
+        
+        termios.tcflush(sys.stdin, termios.TCIOFLUSH)
+
+
+
 def Pause(Quiet=True):
 	
 	if Quiet: os.system("Pause > Nul")
+	
 	else: os.system("Pause")
 
 
@@ -84,8 +114,9 @@ def Clear():
 def Salir(Num=0):
 	
 	HiddenCursor("Show")
-	os.system("cls")
+	Clear()
 	Dat()
+	
 	exit(Num)
 
 
@@ -97,11 +128,14 @@ def Sleep(Num=1.5):
 
 
 def Ctrl_C():
+	
 	try:
 		print("\n\n\n\n\t\t [!] Cancelado...")
 		os.system("title Cancelando... && timeout /nobreak 03 > Nul")
 		return
+		
 	except KeyboardInterrupt:
+		
 		Ctrl_C()
 
 
@@ -382,16 +416,20 @@ def Download():
 	
 	global Cont
 	
+	VideoHD = ""
+	
 	if URLEnArgv == True:				#~ Si se paso la URL en los argumentos se descargará solo ese video.
 		URLVid = sys.argv[1]
 	else:
+		#~ Clear()
+		
 		URLVid = input("\n\n\n\t [+] URL: ")		#~ Escribimos la URL del Video a Descargar.	
 		
 		if URLVid.startswith("-lr") or URLVid.startswith("-lr"):
 			
 			print("\n\n\t Lista De Reproducción.")
 			
-			#~ Descarga una lista de Reproducción de Yotube
+			#~ Descarga una lista de Reproducción de Youtube
 			URL = URLVid.split(" ")
 			URL = URL[1]
 				
@@ -406,7 +444,7 @@ def Download():
 			# Descarga los Videos de La Lista de Reproducción.
 			for Video_URL in vid_urls_in_playlist:
 				Lista_Reproduccion(Ruta, Video_URL)
-				time.sleep(1)
+				Sleep(1)
 		
 		elif URLVid.startswith("https://"): pass
 		else: print("\n\n\t [!] Error, URL no valida.")
@@ -417,53 +455,61 @@ def Download():
 	
 	#=======================================================================
 	
-	while True:
-		
-		Clear()
-				
-		Conty = 0
-		Dic = {}
-		
-		print("\n\n\t  [+] Elige Una Opción:\n")
-		
-		for _ in Video.get_videos():		# Permite Elegir el Formato y La Caidad Deseada de los videos.
-			Conty += 1
-			x = str(_)
-			Formato = x.split(": ")[1].split(" - ")[0]
-			Calidad = x.split(" - ")[1]
+	print("\n\n\t [*] Por Defecto [.mp4]")
+	z = input("\n\n\t [+] Seleccionar Calidad Y Formato del Video Manualmente [S/N]\n\n\t >>> ").lower()
+	
+	if z == "si" or z == "s":
+	
+		while True:
 			
-			Cadena = Formato + " - " + Calidad
-			Dic[Conty] = Cadena
+			Clear()
+			Conty = 0
+			Dic = {}
 			
-			print("\t [", Conty, "] ", Cadena)
-		
-		try:
-			Ops = int(input("\n\t >>> "))
-		
-			if Ops < 1 or Ops > Conty:
+			print("\n\n\t  [+] Elige Una Opción:\n")
+			
+			for _ in Video.get_videos():		# Permite Elegir el Formato y La Caidad Deseada de los videos.
+				Conty += 1
+				x = str(_)
+				Formato = x.split(": ")[1].split(" - ")[0]
+				Calidad = x.split(" - ")[1]
 				
-				print("\n\n\t [!] Elige una Opción Valida!")
+				Cadena = Formato + " - " + Calidad
+				Dic[Conty] = Cadena
+				
+				print("\t [", Conty, "] ", Cadena)
+			
+			try:
+				Ops = int(PressON("\n\t >>> "))
+				
+				if Ops < 1 or Ops > Conty:
+					
+					print("\n\n\t [!] Elige una Opción Valida!")
+					Sleep()
+					continue
+				
+				Dato = Dic[int(Ops)]
+			
+				Formato = Dato.split("(.")[1].split(")")[0]
+				Calidad = Dato.split(" - ")[1]
+				VideoHD = Video.get(Formato, Calidad)
+				Nomb = Nombre = VideoHD.filename
+				
+				break
+			
+			except ValueError:
+				
+				print("\n\n\t [!] Elige un Número!")
 				Sleep()
-				continue
-			
-			Dato = Dic[int(Ops)]
-		
-			Formato = Dato.split("(.")[1].split(")")[0]
-			Calidad = Dato.split(" - ")[1]
-			VideoHD = Video.get(Formato, Calidad)
-			Nomb = Nombre = VideoHD.filename
-			
-			break
-		
-		except ValueError:
-			
-			print("\n\n\t [!] Elige un Número!")
-			Sleep()
-			
-		except Exception as ex:
-			print(type(ex).__name__)
-			Dat()
-			Salir()
+				
+			except Exception as ex:
+				print(type(ex).__name__)
+				Dat()
+				Salir()
+	
+	else:
+		VideoHD = Video.filter('mp4')[-1]
+		Nomb = Nombre = VideoHD.filename
 	
 	#=======================================================================
 	
@@ -531,7 +577,7 @@ def Download_Lista(URLVid):
 				break
 			else:
 				Cont += 1
-				Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
+				Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un número para evitar repetición.
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
