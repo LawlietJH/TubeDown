@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Windows
 # Python 3
 #
 #████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
@@ -8,7 +9,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.2.8
+#																v1.2.9
 
 import urllib.request
 import urllib.error
@@ -20,7 +21,7 @@ import re
 
 
 Autor = "LawlietJH"
-Version = "v1.2.8"
+Version = "v1.2.9"
 
 
 
@@ -55,7 +56,7 @@ def Dat():
 	print(Nombre, "\n\n", Autor, Ver)
 	
 	try:
-		time.sleep(3)
+		Sleep(3)
 	except KeyboardInterrupt:
 		Dat()
 
@@ -65,11 +66,31 @@ def Dat():
 
 
 
+def Pause(Quiet=True):
+	
+	if Quiet: os.system("Pause > Nul")
+	else: os.system("Pause")
+
+
+
+def Clear():
+	
+	os.system("Cls")
+
+
+
 def Salir(Num=0):
 	
 	HiddenCursor("Show")
 	os.system("cls")
+	Dat()
 	exit(Num)
+
+
+
+def Sleep(Num=1.5):
+	
+	time.sleep(Num)
 
 
 
@@ -143,8 +164,13 @@ def Chk_Dep():
 		
 	except ModuleNotFoundError:
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
-		os.system("title Instalando PyTube && pip install pytube > Nul && cls")
+		x = os.popen("title Instalando PyTube && pip install pytube > Nul && cls").read()
 		
+		if x == "":
+			Clear()
+			print("\n\n\t [!] Se Necesita Tener Instalado\n\n\t     El Administrador de Paquetes de Python: Pip\n\n\t Instalalo.")
+			Pause(), Salir(1)
+			
 	except Exception as ex:
 		print( type(ex).__name__ )		#Ver cuando ocurre un error y poder añadirlo a las ecepciones, y no cierre el programa.
 
@@ -158,11 +184,9 @@ except:					# Si Hay Algún Error Significa Que No Se Instaló Correctamente.
 	print("\n   Revise Su Conexión o Instale El Módulo Manualmente Desde Consola Con:")
 	print("\n\t 'pip install pytube'   o   ' pip3 install pytube'")
 	
-	try:
-		os.system("Pause > Nul")
+	try: Pause
 	except KeyboardInterrupt: pass
 	
-	Dat()
 	Salir(0)
 
 
@@ -190,7 +214,7 @@ def Modo_de_Uso():
 	"""
 	
 	print(Uso)
-	os.system("Pause > Nul")
+	Pause()
 
 
 #=======================================================================
@@ -401,6 +425,7 @@ def Download():
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
 			if URLEnArgv == True:			#~ Si se paso la URL en los argumentos y se cancela cerrará el Script.
+				Data()
 				Salir(0)
 				
 			break
@@ -428,7 +453,7 @@ def Download_Lista(URLVid):
 			print("\n\n\n [+] Video: ", Video.filename, "\n\n")		#~ Se imprime el nombre del video.
 			bar = BarraProgreso()
 			VideoHD.download(r""+Ruta, on_progress=bar.Progreso, on_finish=bar.End)		#~ Descargamos el video seleccionado.
-			time.sleep(1)
+			Sleep(1)
 			break
 			
 		except OSError:
@@ -436,7 +461,7 @@ def Download_Lista(URLVid):
 				Conny += 1
 				print("\n\n\t\t [!] Video Repetido...")			#~ Usando 'TubeDown.py -l URList.ext -nr' (.ext significa extensión)
 				print("\n\n\t\t\t", Conny," / ", VidTotal)	#~ Mostrara esto si el video esta repetido y no lo descargará.
-				time.sleep(1)
+				Sleep(1)
 				break
 			else:
 				Cont += 1
@@ -448,7 +473,7 @@ def Download_Lista(URLVid):
 		
 		except Exception as ex:
 			print(type(ex).__name__)	#Si ocurre un error nuevo mostrara el nombre y no cerrará el programa.
-			os.system("Pause > Nul")
+			Pause()
 	
 
      
@@ -552,7 +577,7 @@ def getPageHtml(url):
 	except urllib.error.URLError as e:
 
 		print("\n\n\t [!] URL No Valida.")
-		time.sleep(3)
+		Sleep(3)
 		Modo_de_Uso()
 		Salir(1)
 
@@ -638,7 +663,7 @@ def ImprimirURLs(vid_urls):
 	VidTotal = 0
 	for x, url in enumerate(vid_urls):
 		print("\t", x+1, " - ", url)
-		time.sleep(0.04)
+		Sleep(0.04)
 		VidTotal += 1
 
 
@@ -663,7 +688,8 @@ Ruta = Ruta_Descargas()		#~ Obtenemos La Ruta Para Descargar el o los Videos des
 
 def main():
 	
-	os.system("cls && title TubeDown.py            by: LawlietJH")
+	os.system("cls && title TubeDown.py                  by: LawlietJH" +\
+			  "                  " + Version)
 	
 	global Ruta
 	global LR
@@ -714,7 +740,7 @@ def main():
 			# Descarga los Videos de La Lista de Reproducción.
 			for Video_URL in vid_urls_in_playlist:
 				Lista_Reproduccion(Ruta, Video_URL)
-				time.sleep(1)
+				Sleep(1)
 		
 		else:	Modo_de_Uso()
 		
@@ -746,7 +772,7 @@ def main():
 			# Descarga los Videos de La Lista de Reproducción.
 			for Video_URL in vid_urls_in_playlist:
 				Lista_Reproduccion(Ruta, Video_URL)
-				time.sleep(1)
+				Sleep(1)
 			
 		else:	Modo_de_Uso()
 		
