@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Windows
 # Python 3
+# Windows
 #
 #████████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
 #╚══██╔══╝██║   ██║██╔══██╗██╔════╝██╔══██╗██╔═══██╗██║    ██║████╗  ██║
@@ -9,7 +9,7 @@
 #   ██║   ╚██████╔╝██████╔╝███████╗██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
 #   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
 #                                                         By: LawlietJH
-#																v1.3.1
+#																v1.3.2
 
 import urllib.request
 import urllib.error
@@ -22,7 +22,7 @@ import re
 
 
 Autor = "LawlietJH"
-Version = "v1.3.1"
+Version = "v1.3.2"
 
 
 
@@ -49,7 +49,7 @@ BA = r"""
 
 
 
-def Dat(Quiet=False):
+def Dat(Quiet=False):		# Muestra La Información Del Script: Autor, Versión y Nombre.
 		
 	Nombre = BTD
 	Autor = BA
@@ -69,7 +69,8 @@ def Dat(Quiet=False):
 
 
 
-def PressON(Cadena=""):
+def PressON(Cadena=""):		# Permite Capturar 1 Caracter Que se Escriba en Pantalla,
+							# Como un Input() pero de 1 solo caracter.
 	
 	Imp()
 	
@@ -97,15 +98,15 @@ def Imp():	# Limpia El Buffer (Flush)
 
 
 
-def Pause(Quiet=True):
+def Pause(Quiet=True):		# Hace Una Pausa.
 	
-	if Quiet: os.system("Pause > Nul")
+	if Quiet: os.system("Pause > Nul")		# No muestra Nada En Pantalla.
 	
-	else: os.system("Pause")
+	else: os.system("Pause")		# Muestra En Pantalla: Presione una tecla para continuar...
 
 
 
-def Clear():
+def Clear():		# Limpia Pantalla.
 	
 	os.system("Cls")
 
@@ -257,14 +258,6 @@ def Modo_de_Uso():
 
 
 
-def Chk_Nomb(Nombre):
-	
-	Nombre = Nombre.replace("|", "-")
-	
-	return Nombre
-
-
-
 def Ruta_Descargas():
 	
 	Ruta = os.getcwd()							#~ Se Obtiene La Ruta Actual Del Script
@@ -292,7 +285,7 @@ def Ruta_txt():
 	
 
 
-def Chk_txt(x):
+def Chk_txt(x):		# Comprueba si Existe un Archivo.
 	
 	Ruta_txt()
 	
@@ -305,7 +298,7 @@ def Chk_txt(x):
 	
 
 
-def Chk_URL():
+def Chk_URL():		# Comprueba La URL.
 	
 	while xD:
 		
@@ -393,7 +386,7 @@ def Chk_URL_Lista():
 
 
 
-def Open_txt(X):
+def Open_txt(X):		# Abre un Archivo de Texto.
 	
 	global VideosList
 	global VidTotal
@@ -412,16 +405,13 @@ def Open_txt(X):
 
 
 
-def Download():
+def Download():		# Hace La Descarga De URL Individual.
 	
 	global Cont
-	
-	VideoHD = ""
 	
 	if URLEnArgv == True:				#~ Si se paso la URL en los argumentos se descargará solo ese video.
 		URLVid = sys.argv[1]
 	else:
-		#~ Clear()
 		
 		URLVid = input("\n\n\n\t [+] URL: ")		#~ Escribimos la URL del Video a Descargar.	
 		
@@ -455,8 +445,10 @@ def Download():
 	
 	#=======================================================================
 	
+	Clear()
+	
 	print("\n\n\t [*] Por Defecto [.mp4]")
-	z = input("\n\n\t [+] Seleccionar Calidad Y Formato del Video Manualmente [S/N]\n\n\t >>> ").lower()
+	z = input("\n\t [+] Seleccionar Calidad Y Formato Manualmente? [S/N]\n\n\t >>> ").lower()
 	
 	if z == "si" or z == "s":
 	
@@ -466,7 +458,7 @@ def Download():
 			Conty = 0
 			Dic = {}
 			
-			print("\n\n\t  [+] Elige Una Opción:\n")
+			print("\n\n\t  [*] Formatos Y Calidades Disponibles:\n")
 			
 			for _ in Video.get_videos():		# Permite Elegir el Formato y La Caidad Deseada de los videos.
 				Conty += 1
@@ -528,7 +520,7 @@ def Download():
 			
 		except OSError:
 			Cont += 1
-			Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un numero para evitar repetición.
+			Video.set_filename(Nombre+" ("+str(Cont)+")")	#~ Se añade al nombre (#) un número para evitar repetición.
 			
 		except KeyboardInterrupt:						#~ Por si cancela la operación con "Ctrl + C".
 			Ctrl_C()
@@ -737,8 +729,9 @@ def getPlaylistVideoUrls(page_content, url):
 
 
 
-#function added to get audio files along with the video files from the playlist
+#Función Añadida Para Obener Los Archivos de Audio a lo Largo de los Video de La Lista de Reproducción.
 def Lista_Reproduccion(Ruta, vid_url):
+	
 	try:
 		yt = YouTube(vid_url)
 	except Exception as ex:
