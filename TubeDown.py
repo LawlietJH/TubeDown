@@ -199,9 +199,9 @@ def Chk_Dep():
 	try:
 		import pytube
 		
-	except ModuleNotFoundError:
+	except ImportError:
 		print("\n\n\t[!] Instalando Dependencias...\n\n\t\t")
-		x = os.popen("title Instalando PyTube && pip install pytube > Nul && cls").read()
+		x = os.popen("title Instalando PyTube && py -m pip install pytube > Nul && cls").read()
 		
 		if x == "":
 			Clear()
